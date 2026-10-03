@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Marchés Ferme</title>
+<meta name="description" content="Cours physiques et à terme, intrants, sucre, capital markets et météo pour une exploitation de grandes cultures.">
+<meta name="theme-color" content="#1d2420">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Marchés Ferme">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single-column ticker board, sticky scrolling tab strip, one card per instrument family, rows expand to show primary/secondary sources */
+:root{
+  --bg:#f3f4ef; --surface:#ffffff; --ink:#1d2420; --muted:#5f6a63; --line:#dde1d8;
+  --accent:#b07a16; --accent-soft:#f4e7c9; --sky:#2f6f9f; --sky-soft:#e1edf5;
+  --up:#1f7a45; --down:#b4372b; --flat:#6b736d; --warn:#8a5d00; --warn-bg:#fbf1d6; --ok-bg:#e3f2e8;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-data:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121614; --surface:#1b201d; --ink:#e8ece6; --muted:#9aa59d; --line:#2c332f;
+  --accent:#e0a83a; --accent-soft:#3a2f17; --sky:#7fb6dd; --sky-soft:#1a2b38;
+  --up:#4cc27c; --down:#f07466; --flat:#9aa59d; --warn:#e8b84a; --warn-bg:#33290f; --ok-bg:#16301f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121614; --surface:#1b201d; --ink:#e8ece6; --muted:#9aa59d; --line:#2c332f;
+  --accent:#e0a83a; --accent-soft:#3a2f17; --sky:#7fb6dd; --sky-soft:#1a2b38;
+  --up:#4cc27c; --down:#f07466; --flat:#9aa59d; --warn:#e8b84a; --warn-bg:#33290f; --ok-bg:#16301f; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:14px 48px;display:flex;flex-direction:column;gap:14px}
+header.top{display:flex;flex-direction:column;gap:4px}
+.eyebrow{font-family:var(--f-data);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-display);font-weight:700;font-size:2rem;line-height:1;margin:0;letter-spacing:.01em}
+h1 span{color:var(--accent)}
+.stamp{font-size:13px;color:var(--muted)}
+.stamp b{color:var(--ink);font-weight:600}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{flex:0 0 auto;font-family:var(--f-display);font-weight:600;font-size:16px;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:10px;padding:9px 14px;cursor:pointer;min-height:44px}
+nav.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,input:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section.panel{display:flex;flex-direction:column;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card h2{font-family:var(--f-display);font-weight:700;font-size:1.35rem;margin:0;letter-spacing:.02em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.card h2 small{font-family:var(--f-data);font-size:11px;font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{border-radius:10px;background:var(--accent-soft);padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.tile .lbl{font-size:12px;color:var(--muted);font-weight:500}
+.tile .val{font-family:var(--f-data);font-size:1.4rem;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.15;overflow-wrap:anywhere}
+.tile .val u{text-decoration:none;font-size:.6em;color:var(--muted);margin-left:3px}
+.chg{font-family:var(--f-data);font-size:13px;font-variant-numeric:tabular-nums;font-weight:500}
+.up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--flat)}
+.sub{font-family:var(--f-data);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+/* data rows */
+.rows{display:flex;flex-direction:column}
+details.row{border-top:1px solid var(--line)}
+.rows > details.row:first-child{border-top:0}
+details.row summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:baseline;padding-block:9px}
+details.row summary::-webkit-details-marker{display:none}
+.r-name{min-width:0}
+.r-name b{font-weight:600;font-size:14px}
+.r-name i{display:block;font-style:normal;font-size:12px;color:var(--muted)}
+.r-val{text-align:right;white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.r-val .p{font-family:var(--f-data);font-variant-numeric:tabular-nums;font-size:14.5px}
+.r-meta{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.pill{font-family:var(--f-data);font-size:11px;border-radius:999px;padding:1px 8px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.ok{background:var(--ok-bg);color:var(--up);border-color:transparent}
+.pill.gap{background:var(--warn-bg);color:var(--warn);border-color:transparent}
+.pill.key{color:var(--accent);border-color:var(--accent)}
+.pill.tr{font-variant-numeric:tabular-nums}
+.r-detail{padding:0 0 10px;display:flex;flex-direction:column;gap:6px;font-size:12.5px}
+.srcline{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:baseline;background:var(--bg);border-radius:8px;padding:6px 8px}
+.srcline .tag{font-family:var(--f-data);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.srcline a{color:var(--ink);text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}
+.srcline .v{font-family:var(--f-data);font-variant-numeric:tabular-nums;white-space:nowrap}
+.r-note{color:var(--warn)}
+.trend{font-size:13.5px;background:var(--bg);border-radius:8px;padding:8px 10px}
+.trend strong{font-weight:600}
+.note{font-size:12.5px;color:var(--warn);background:var(--warn-bg);border-radius:8px;padding:8px 10px}
+/* search */
+.searchbar{display:flex;gap:8px}
+.searchbar input{flex:1;min-width:0;font:inherit;font-size:16px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.btn{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.03em;text-transform:uppercase;border-radius:10px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);padding:9px 14px;cursor:pointer;min-height:44px}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links a{font-size:13.5px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:7px 12px;text-decoration:none}
+.links a:hover{border-color:var(--accent)}
+.hint{font-size:12.5px;color:var(--muted)}
+/* weather */
+.wx-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.wx-place{font-family:var(--f-display);font-size:1.5rem;font-weight:700}
+.wx-status{font-size:12.5px;color:var(--muted)}
+.wx-now{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;align-items:center}
+.wx-now .big{display:flex;align-items:center;gap:10px}
+.wx-now .big svg{width:56px;height:56px}
+.wx-now .temp{font-family:var(--f-data);font-size:2.6rem;font-weight:500;line-height:1}
+.wx-now .phr{font-size:15px;font-weight:600}
+.wx-now .rf{font-size:12.5px;color:var(--muted)}
+.wx-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.fact{background:var(--sky-soft);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.fact .k{font-size:11.5px;color:var(--muted)}
+.fact .v{font-family:var(--f-data);font-size:15px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.chart-wrap{overflow-x:auto;margin-inline:-4px}
+.chart-wrap svg{display:block;width:100%;min-width:520px;height:auto}
+.ch-ax{fill:var(--muted);font-family:var(--f-data);font-size:11px}
+.ch-val{fill:var(--ink);font-family:var(--f-data);font-size:11.5px}
+.ch-rain{fill:var(--sky)}
+.ch-rainlbl{fill:var(--sky);font-family:var(--f-data);font-size:10.5px}
+.ch-t{fill:none;stroke:var(--accent);stroke-width:2.2}
+.ch-tdot{fill:var(--surface);stroke:var(--accent);stroke-width:2}
+.ch-tmin{fill:none;stroke:var(--sky);stroke-width:2}
+.ch-norm{fill:none;stroke:var(--muted);stroke-width:1.2;stroke-dasharray:4 4}
+.ch-grid{stroke:var(--line);stroke-width:1}
+.ch-sun{fill:var(--accent)}
+.ch-night{fill:var(--line)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:4px;border-radius:2px;vertical-align:middle;margin-right:5px}
+.wx-total{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wx-total .tile{background:var(--sky-soft)}
+.dn{display:flex;flex-direction:column}
+.dn-day{display:grid;grid-template-columns:62px minmax(0,1fr) minmax(0,1fr);gap:8px;padding-block:9px;border-top:1px solid var(--line);align-items:stretch}
+.dn-day:first-child{border-top:0}
+.dn-date{font-family:var(--f-data);font-size:12px;color:var(--muted);display:flex;flex-direction:column;justify-content:center}
+.dn-date b{color:var(--ink);font-family:var(--f-body);font-size:14px}
+.dn-date small{font-size:10.5px}
+.slot{border-radius:10px;padding:7px 8px;display:grid;grid-template-columns:26px minmax(0,1fr);gap:2px 6px;align-items:center;background:var(--bg);min-width:0}
+.slot.day{background:var(--accent-soft)}
+.slot svg{width:26px;height:26px;grid-row:span 2}
+.slot .s1{font-family:var(--f-data);font-size:14px;font-variant-numeric:tabular-nums}
+.slot .s1 span{font-family:var(--f-body);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
+.slot .s2{font-family:var(--f-data);font-size:11.5px;color:var(--sky);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.slot .s3{grid-column:1 / -1;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rainbar{grid-column:1 / -1;height:5px;border-radius:3px;background:var(--surface);overflow:hidden}
+.rainbar span{display:block;height:100%;background:var(--sky)}
+.hist-tbl{width:100%;border-collapse:collapse;font-size:12.5px;min-width:520px}
+.hist-tbl th{font-weight:600;text-align:right;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:6px 6px;border-bottom:1px solid var(--line)}
+.hist-tbl th:first-child,.hist-tbl td:first-child{text-align:left}
+.hist-tbl td{font-family:var(--f-data);font-variant-numeric:tabular-nums;text-align:right;padding:6px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+.empty{font-size:13px;color:var(--muted);background:var(--bg);border-radius:10px;padding:12px}
+.results{display:flex;flex-direction:column;gap:6px}
+.results button{text-align:left;font:inherit;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;min-height:44px}
+@media (max-width:420px){.wx-facts{grid-template-columns:repeat(2,minmax(0,1fr))}.dn-day{grid-template-columns:50px minmax(0,1fr) minmax(0,1fr);gap:6px}}
+.tbl-wrap{overflow-x:auto}
+footer{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:6px;padding-top:6px}
+@media (max-width:380px){.hero{grid-template-columns:1fr}.wx-total{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:no-preference){section.panel{animation:fade .18s ease-out}}
+@keyframes fade{from{opacity:.4}to{opacity:1}}
+
+html{-webkit-text-size-adjust:100%}
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;min-height:100vh}
+[hidden]{display:none!important}
+img{max-width:100%}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;align-self:flex-start}
+.seg button{font:inherit;font-size:13.5px;padding:8px 14px;background:var(--surface);color:var(--muted);border:0;border-left:1px solid var(--line);cursor:pointer;min-height:40px}
+.seg button:first-child{border-left:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.dn-day.m4{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.dn-day.m4 .dn-date{grid-column:1 / -1;flex-direction:row;gap:8px;align-items:baseline;justify-content:flex-start}
+.dn-day.m4 .dn-date small{margin-left:auto}
+.dn-day.m4 .slot{grid-template-columns:22px minmax(0,1fr);padding:6px}
+.dn-day.m4 .slot svg{width:22px;height:22px}
+.dn-day.m4 .slot .s1{font-size:13px}
+.tile .chg{font-size:11.5px}
+.install{font-size:12.5px;color:var(--muted)}
+.slot.mm{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 7px}
+.mm-l{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.mm-t{display:flex;align-items:center;gap:4px}
+.mm-t svg{width:22px;height:22px}
+.mm-t b{font-family:var(--f-data);font-weight:500;font-size:15px}
+.mm-r{font-family:var(--f-data);font-size:11px;color:var(--sky);white-space:nowrap}
+.mm-s{font-size:11px;color:var(--muted);white-space:nowrap}
+.slot.mm .rainbar{width:100%}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Grandes cultures · aide à la décision</div>
+    <h1>Marchés <span>Ferme</span></h1>
+    <div class="stamp">Cours de clôture du <b id="asof">vendredi 2 octobre 2026</b> · météo en direct</div>
+    <div class="install" id="install-hint" hidden>Pour l'installer : bouton Partager de Safari, puis « Sur l'écran d'accueil ».</div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Rubriques">
+    <button role="tab" id="t-recap" aria-controls="p-recap" aria-selected="true">Récap</button>
+    <button role="tab" id="t-grains" aria-controls="p-grains" aria-selected="false">Grains</button>
+    <button role="tab" id="t-intrants" aria-controls="p-intrants" aria-selected="false">Intrants</button>
+    <button role="tab" id="t-sucre" aria-controls="p-sucre" aria-selected="false">Sucre</button>
+    <button role="tab" id="t-cm" aria-controls="p-cm" aria-selected="false">Capital markets</button>
+    <button role="tab" id="t-meteo" aria-controls="p-meteo" aria-selected="false">Météo</button>
+  </nav>
+
+  <section class="panel" id="p-recap" role="tabpanel" aria-labelledby="t-recap">
+    <article class="card">
+      <h2>Récap physique <small>prix rendu / départ</small></h2>
+      <div class="rows" data-list="recap"></div>
+      <div class="hint">Uniquement des cotations physiques (marchandise livrée ou enlevée). Le sucre n'a pas de cotation physique publique en France : seul le contrat à livraison physique de Londres est repris. Touchez une ligne pour voir les sources.</div>
+    </article>
+  </section>
+
+  <section class="panel" id="p-grains" role="tabpanel" aria-labelledby="t-grains" hidden>
+    <article class="card">
+      <h2>Blé tendre <small>Euronext EBM · €/t</small></h2>
+      <div class="hero" data-hero="ble"></div>
+      <div class="sub">À terme</div>
+      <div class="rows" data-list="ble_terme"></div>
+      <div class="sub">Physique · récolte 2026</div>
+      <div class="rows" data-list="ble_phys"></div>
+      <div class="trend"><strong>Tendance :</strong> hausse nette sur 3 mois (+15,00 % sur décembre 2026) après un point bas début juillet. Rebond vendredi après la chute du 30 septembre ; les espoirs de négociation Russie-Ukraine freinent la hausse.</div>
+    </article>
+    <article class="card">
+      <h2>Maïs <small>Euronext EMA · €/t</small></h2>
+      <div class="hero" data-hero="mais"></div>
+      <div class="sub">À terme</div>
+      <div class="rows" data-list="mais_terme"></div>
+      <div class="sub">Physique · récolte 2026</div>
+      <div class="rows" data-list="mais_phys"></div>
+      <div class="hint">Tendances 3 et 6 mois calculées sur la même échéance (règlements des 02/07 et 02/04, La Dépêche). Échéances 2027 sans archive publique gratuite : « n.d. » jusqu'à ce que l'historique quotidien de la page atteigne 3 puis 6 mois.</div>
+      <div class="trend"><strong>Tendance :</strong> forte hausse sur 6 mois (+29,48 % sur novembre 2026). Écart important entre la récolte 2026 (269 €) et la récolte 2027 (230,75 €). Origines export en baisse vendredi.</div>
+    </article>
+  </section>
+
+  <section class="panel" id="p-intrants" role="tabpanel" aria-labelledby="t-intrants" hidden>
+    <article class="card">
+      <h2>Brent <small>ICE · $/baril</small></h2>
+      <div class="rows" data-list="brent"></div>
+      <div class="trend"><strong>Tendance :</strong> +37,23 % sur 3 mois, −8,52 % sur 6 mois (pic d'avril lié au conflit au Moyen-Orient). Repli vendredi après l'accord européen de déstockage de gazole.</div>
+    </article>
+    <article class="card">
+      <h2>GNR <small>France · €/hl</small></h2>
+      <div class="rows" data-list="gnr"></div>
+      <div class="trend"><strong>Tendance :</strong> forte hausse depuis juillet. La Chambre d'agriculture de Normandie situe le point bas de juin vers 90 €/hl, contre 137,86 €/hl à la mi-septembre. Aide de 15 c€/L sur les achats de mai à octobre 2026 (Chorus Pro, DemaTIC).</div>
+      <div class="note">Le GNR agricole bénéficie d'une accise réduite (3,86 €/hl). Le prix FioulReduc concerne le GNR ordinaire livré aux particuliers et professionnels : il n'est pas représentatif du prix agricole, il sert de contrôle de direction.</div>
+    </article>
+    <article class="card">
+      <h2>Solution azotée <small>N30 · €/t</small></h2>
+      <div class="rows" data-list="azote"></div>
+      <div class="trend"><strong>Tendance :</strong> haussière. +35 €/t sur août, tirée par le gaz (TTF de 59,07 à 69,81 €/MWh) et les achats anticipés avant la date limite d'aide du 30 septembre.</div>
+    </article>
+  </section>
+
+  <section class="panel" id="p-sucre" role="tabpanel" aria-labelledby="t-sucre" hidden>
+    <article class="card">
+      <h2>Sucre <small>ICE · règlements</small></h2>
+      <div class="hero" data-hero="sucre"></div>
+      <div class="sub">Roux n°11 · New York · c$/lb</div>
+      <div class="rows" data-list="sucre11"></div>
+      <div class="sub">Blanc n°5 · Londres · $/t</div>
+      <div class="rows" data-list="sucre5"></div>
+      <div class="sub">Physique · sucre blanc UE</div>
+      <div class="rows" data-list="sucre_phys"></div>
+      <div class="trend"><strong>Tendance :</strong> fortement haussière. Mars 2027 (n°11) +26,38 % sur 3 mois et +22,34 % sur 6 mois, plus haut historique du contrat vendredi. Courbe en déport : l'échéance proche vaut plus que les lointaines, signe de tension sur l'offre à court terme. Moteurs : mousson indienne 12,6 % sous la normale, risque El Niño, production thaïlandaise attendue en baisse de 17 %, pluies au Brésil.</div>
+      <div class="hint">Tendances 3 et 6 mois calculées sur la même échéance, aux règlements des 02/07/2026 et 02/04/2026 (Czarnikow).</div>
+    </article>
+  </section>
+
+  <section class="panel" id="p-cm" role="tabpanel" aria-labelledby="t-cm" hidden>
+    <article class="card">
+      <h2>Recherche <small>actions · obligations · fonds</small></h2>
+      <form class="searchbar" id="cm-form" autocomplete="off">
+        <input id="cm-q" type="search" placeholder="Nom, ticker ou ISIN (ex. FR0000120271)" aria-label="Rechercher un produit">
+        <button class="btn" type="submit">Chercher</button>
+      </form>
+      <div class="links" id="cm-links" hidden></div>
+      <div class="hint" id="cm-hint">La recherche ouvre le produit chez plusieurs fournisseurs à la fois, pour comparer les cours entre sources.</div>
+    </article>
+    <article class="card">
+      <h2>Indices actions <small>clôtures</small></h2>
+      <div class="rows" data-list="indices"></div>
+      <div class="trend"><strong>Tendance :</strong> rebond général vendredi. Emploi américain faible (+29 000 postes en septembre, chômage 4,2 %), ce qui éloigne une hausse des taux de la Fed. Nikkei porté par les semi-conducteurs.</div>
+    </article>
+    <article class="card">
+      <h2>Taux d'État 10 ans <small>G7 + zone euro · %</small></h2>
+      <div class="rows" data-list="taux"></div>
+      <div class="trend"><strong>Écart OAT-Bund :</strong> 140 pb (4,866 − 3,4645 %).</div>
+      <div class="hint">Le G8 n'existe plus depuis 2014 : la Russie est exclue, le tableau suit le G7.</div>
+    </article>
+    <article class="card">
+      <h2>Monétaire et swap <small>EUR · %</small></h2>
+      <div class="rows" data-list="mm"></div>
+    </article>
+  </section>
+
+  <section class="panel" id="p-meteo" role="tabpanel" aria-labelledby="t-meteo" hidden>
+    <article class="card">
+      <form class="searchbar" id="wx-form" autocomplete="off">
+        <input id="wx-q" type="search" placeholder="Commune ou code postal (ex. 60410)" aria-label="Rechercher une commune">
+        <button class="btn" type="submit">Chercher</button>
+      </form>
+      <div class="results" id="wx-results" hidden></div>
+    </article>
+
+    <article class="card">
+      <div class="wx-head">
+        <div class="wx-place" id="wx-place">Verberie (60410)</div>
+        <button class="btn ghost" id="wx-refresh" type="button">Actualiser</button>
+      </div>
+      <div class="wx-status" id="wx-status">Chargement…</div>
+      <div class="wx-now" id="wx-now"></div>
+      <div class="wx-facts" id="wx-facts"></div>
+    </article>
+
+    <article class="card">
+      <h2>24 prochaines heures <small>heure par heure</small></h2>
+      <div class="chart-wrap" id="wx-hourly"><div class="empty">Chargement…</div></div>
+      <div class="legend"><span><i style="background:var(--accent)"></i>Température</span><span><i style="background:var(--sky)"></i>Pluie (mm) · probabilité</span><span><i style="background:var(--accent);opacity:.6"></i>Ensoleillement de l'heure</span></div>
+    </article>
+
+    <article class="card">
+      <h2>10 jours <small>par moment de la journée</small></h2>
+      <div class="wx-total" id="wx-total"></div>
+      <div class="chart-wrap" id="wx-10d"></div>
+      <div class="legend"><span><i style="background:var(--accent)"></i>Max.</span><span><i style="background:var(--sky)"></i>Min.</span><span><i style="background:var(--sky);opacity:.5"></i>Pluie (mm)</span></div>
+      <div class="dn" id="wx-days"></div>
+      <div class="hint">Nuit 0 h–6 h · Matin 6 h–12 h · Après-midi 12 h–18 h · Soir 18 h–24 h. Pour chaque moment : température mini–maxi, pluie cumulée, heures de soleil.</div>
+    </article>
+
+    <article class="card">
+      <h2>Historique <small>pluie · température · soleil</small></h2>
+      <div class="seg" role="group" aria-label="Période">
+        <button type="button" data-range="30" aria-pressed="false">30 j</button>
+        <button type="button" data-range="90" aria-pressed="true">3 mois</button>
+        <button type="button" data-range="365" aria-pressed="false">12 mois</button>
+      </div>
+      <div class="wx-total" id="wx-hist-tiles"></div>
+      <div class="chart-wrap" id="wx-hist-chart"><div class="empty">Chargement de l'historique…</div></div>
+      <div class="legend"><span><i style="background:var(--accent)"></i>Max.</span><span><i style="background:var(--sky)"></i>Min.</span><span><i style="background:var(--sky);opacity:.5"></i>Pluie</span><span><i style="background:var(--accent);opacity:.6"></i>Soleil (h)</span></div>
+      <div class="tbl-wrap" id="wx-hist-tbl"></div>
+      <div class="hint">Données météo <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (licence CC BY 4.0) : réanalyse ERA5 et modèles Météo-France. Ce sont des valeurs modélisées sur une maille de quelques kilomètres, pas les relevés d'un pluviomètre sur votre parcelle. Les 5 à 7 derniers jours viennent des analyses récentes, le reste de la réanalyse.</div>
+      <div class="sub">Sources de contrôle</div>
+      <div class="links" id="wx-backup"></div>
+    </article>
+  </section>
+
+  <footer>
+    <div>Pastilles : <b>2 sources</b> = deux sources indépendantes concordent ; <b>écart</b> = elles divergent, les deux valeurs sont dans le détail ; <b>1 source</b> = pas encore de contrôle croisé. Tendances 3 et 6 mois calculées sur le même contrat ou la même cotation ; « n.d. » quand l'historique n'est pas public.</div>
+    <div>Cours de clôture publiés chaque soir de semaine (data.json). Météo Open-Meteo actualisée à chaque ouverture ; hors réseau, les dernières données restent affichées.</div>
+  </footer>
+</div>
+
+<script>
+/* ===== DONNÉES DE CLÔTURE (mises à jour chaque soir) ===== */
+var CZ="Czarnikow, règlements ICE (02/10)", CZO="https://www.czapp.com/analyst-insights/daily-market-price-updates-and-commentary-2nd-october-2026/";
+var CMB11="CMB News, règlement 01/10 + variation", CMB11U="https://commodity-board.com/sugar-no-11-firms-above-18-cents-as-india-tightens-policy-and-brazil-leads-supply";
+var CMB5="CMB News, règlement 01/10 + variation", CMB5U="https://commodity-board.com/sugar-beet-margins-ice-no-5-steady-eu-refined-prices-stay-firm";
+var BC="Barchart, variation du 02/10", BCU="https://www.inkl.com/news/sugar-prices-soar-as-weather-concerns-spur-fund-buying";
+var DATA = {
+asof:"vendredi 2 octobre 2026",
+hero:{
+ ble:[{l:"Échéance déc. 2026",v:"241,50",u:"€/t",c:"+2,50",d:"up"},{l:"Récolte 2027 · sept. 2027",v:"233,75",u:"€/t",c:"+1,00",d:"up"}],
+ mais:[{l:"Échéance nov. 2026",v:"269,00",u:"€/t",c:"+2,50",d:"up"},{l:"Récolte 2027 · nov. 2027",v:"230,75",u:"€/t",c:"+0,50",d:"up"}],
+ sucre:[{l:"Roux n°11 · mars 2027",v:"19,93",u:"c$/lb",c:"+0,99 (+5,23 %)",d:"up"},{l:"Blanc n°5 · déc. 2026",v:"531,50",u:"$/t",c:"+24,20 (+4,77 %)",d:"up"}]
+},
+lists:{
+ recap:[
+  {n:"Blé · Rouen rendu",s:"Nominal · janv.–mars",p:"238,00 €/t",c:"+3,00",d:"up",st:"ok",t3:"+14,46 %",t6:"n.c.",
+   src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/physique","238,00"],["La Dépêche, 76/220/11 oct.–déc. (01/10)","https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement","237,50"]],
+   note:"Tendance 3 mois sur la série La Dépêche Rouen 76/220/11 oct.–déc. : 207,50 € le 02/07 → 237,50 € le 01/10. 6 mois non comparable (récolte 2025 en avril)."},
+  {n:"Blé · La Pallice rendu",s:"oct.–déc.",p:"228,25 €/t",c:"+1,50",d:"up",st:"gap",t3:"n.d.",t6:"n.d.",
+   src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/physique","228,25"],["La Dépêche, 76/220/11 (01/10)","https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement","240,50"]],
+   note:"Écart de 12,25 € entre sources : qualités ou bases différentes probables. À vérifier avec votre organisme stockeur."},
+  {n:"Maïs · Bordeaux rendu",s:"nov.–mars",p:"262,75 €/t",c:"+3,00",d:"up",st:"gap",t3:"n.d.",t6:"n.d.",
+   src:[["Terre-net, nov.–mars (02/10)","https://www.terre-net.fr/marche-agricole/mais/physique","262,75"],["La Dépêche, oct.–déc. (01/10)","https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement","271,00"]],
+   note:"Périodes de livraison différentes (nov.–mars contre oct.–déc.)."},
+  {n:"Maïs · Rhin FOB",s:"nov.–mars",p:"247,50 €/t",c:"+2,75",d:"up",st:"one",t3:"n.c.",t6:"n.c.",
+   src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/physique","247,50"]]},
+  {n:"Maïs · Creil FOB",s:"nov.–mars",p:"256,00 €/t",c:"+1,25",d:"up",st:"one",t3:"n.d.",t6:"n.d.",
+   src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/physique","256,00"]]},
+  {n:"GNR agricole",s:"mi-septembre · prix pro",p:"137,86 €/hl",c:"",d:"flat",st:"one",t3:"hausse",t6:"n.d.",
+   src:[["Chambre d'agriculture de Normandie","https://normandie.chambres-agriculture.fr/sinformer/rechercher-innover/economie-et-politiques-publiques/conjoncture-des-marches/detail-du-dossier-conjoncture/conjoncture-prix-gnr","137,86 €/hl"],["FioulReduc, GNR ordinaire, 1 000 L (03/10)","https://www.fioulreduc.com/prix-gnr","190,80 €/hl"]],
+   note:"Les deux sources ne mesurent pas le même produit (agricole contre ordinaire) : pas de confirmation possible."},
+  {n:"Solution azotée N30",s:"Rouen départ",p:"452,75 €/t",c:"+1,50",d:"up",st:"gap",t3:"n.d.",t6:"n.d.",
+   src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/solution-azotee/engrais","452,75"],["Pleinchamp / Argus, FOT Rouen (30/09)","https://www.pleinchamp.com/les-cours/intrants/20-solution-azotee","447,50"]],
+   note:"Écart de 5,25 € entre les deux sources, relevées à deux dates différentes (30/09 et 02/10). Soit 1,509 € par kg d'azote (452,75 ÷ 300 kg N/t)."},
+  {n:"Sucre blanc · Pologne FCA",s:"Kalisz · granulé standard",p:"0,58 €/kg",c:"",d:"flat",st:"one",t3:"n.d.",t6:"n.d.",
+   src:[["CMB News (02/10)","https://commodity-board.com/sugar-beet-margins-ice-no-5-steady-eu-refined-prices-stay-firm","0,58 €/kg"]],
+   note:"Pas de cotation physique publique en France. Repère marché : blanc n°5 décembre 2026 à 531,50 $/t (règlement ICE du 02/10)."}
+ ],
+ ble_terme:[
+  {n:"Déc. 2026",p:"241,50",c:"+2,50",d:"up",st:"ok",t3:"+15,00 %",t6:"+10,40 %",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/terme","241,50"],["La Dépêche : 239,00 le 01/10 + 2,50","https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement","241,50"]],
+   note:"Références : 210,00 € le 02/07 et 218,75 € le 02/04 (La Dépêche)."},
+  {n:"Mars 2027",p:"243,50",c:"+2,50",d:"up",st:"ok",t3:"+13,12 %",t6:"n.d.",note:"Référence 3 mois : 215,25 € le 02/07 (La Dépêche).",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/terme","243,50"],["La Dépêche : 241,00 le 01/10 + 2,50","https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement","243,50"]]},
+  {n:"Mai 2027",p:"243,75",c:"+2,25",d:"up",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/terme","243,75"]]},
+  {n:"Sept. 2027",key:1,p:"233,75",c:"+1,00",d:"up",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/terme","233,75"]]},
+  {n:"Déc. 2027",p:"237,50",c:"+1,25",d:"up",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/terme","237,50"]]}
+ ],
+ ble_phys:[
+  {n:"Rouen rendu",s:"janv.–mars",p:"238,00 €",c:"+3,00",d:"up",st:"ok",t3:"+14,46 %",t6:"n.c.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/physique","238,00"],["La Dépêche 76/220/11 oct.–déc. (01/10)","https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement","237,50"]]},
+  {n:"La Pallice rendu",s:"oct.–déc.",p:"228,25 €",c:"+1,50",d:"up",st:"gap",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/physique","228,25"],["La Dépêche (01/10)","https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement","240,50"]]},
+  {n:"Dunkerque rendu",s:"oct.–déc.",p:"213,25 €",c:"+0,50",d:"up",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/physique","213,25"]]},
+  {n:"Moselle FOB",s:"oct.",p:"233,50 €",c:"+2,25",d:"up",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/physique","233,50"]]},
+  {n:"Creil FOB",s:"oct.–déc.",p:"222,00 €",c:"+5,00",d:"up",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/physique","222,00"]]},
+  {n:"Mer Noire FOB",s:"nov.–janv.",p:"193,75 $",c:"0,00",d:"flat",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/ble-tendre/physique","193,75 $"]]}
+ ],
+ mais_terme:[
+  {n:"Nov. 2026",p:"269,00",c:"+2,50",d:"up",st:"ok",t3:"+17,60 %",t6:"+29,48 %",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/terme","269,00"],["La Dépêche : 266,50 le 01/10 + 2,50","https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement","269,00"]],
+   note:"Références : 228,75 € le 02/07 et 207,75 € le 02/04 (La Dépêche)."},
+  {n:"Mars 2027",p:"263,75",c:"+0,75",d:"up",st:"ok",t3:"+16,19 %",t6:"n.d.",note:"Référence 3 mois : 227,00 € le 02/07 (La Dépêche).",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/terme","263,75"],["La Dépêche : 263,00 le 01/10 + 0,75","https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement","263,75"]]},
+  {n:"Juin 2027",p:"263,25",c:"+1,00",d:"up",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/terme","263,25"]]},
+  {n:"Août 2027",p:"262,75",c:"+1,50",d:"up",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/terme","262,75"]]},
+  {n:"Nov. 2027",key:1,p:"230,75",c:"+0,50",d:"up",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/terme","230,75"]]}
+ ],
+ mais_phys:[
+  {n:"Bordeaux rendu",s:"nov.–mars",p:"262,75 €",c:"+3,00",d:"up",st:"gap",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/physique","262,75"],["La Dépêche oct.–déc. (01/10)","https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement","271,00"]]},
+  {n:"La Pallice rendu",s:"nov.–mars",p:"272,75 €",c:"−1,50",d:"down",st:"ok",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/physique","272,75"],["La Dépêche oct.–déc. (01/10)","https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement","275,00"]]},
+  {n:"Rhin FOB",s:"nov.–mars",p:"247,50 €",c:"+2,75",d:"up",st:"one",t3:"n.c.",t6:"n.c.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/physique","247,50"]]},
+  {n:"Creil FOB",s:"nov.–mars",p:"256,00 €",c:"+1,25",d:"up",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/physique","256,00"]]},
+  {n:"Eure-et-Loir/Loiret départ",s:"oct.–nov.",p:"274,00 €",c:"+3,00",d:"up",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/physique","274,00"]]},
+  {n:"Golfe du Mexique FOB",s:"déc.",p:"238,00 $",c:"−4,00",d:"down",st:"one",t3:"n.d.",t6:"n.d.",src:[["Terre-net (02/10)","https://www.terre-net.fr/marche-agricole/mais/physique","238,00 $"]]}
+ ],
+ brent:[
+  {n:"Brent, échéance déc. 2026",s:"règlement 02/10",p:"99,74 $",c:"−2,57 (−2,51 %)",d:"down",st:"gap",t3:"+37,23 %",t6:"−8,52 %",
+   src:[["Yahoo Finance, règlement (02/10)","https://finance.yahoo.com/energy/articles/oil-rises-slightly-market-weighs-010952829.html","99,74"],["Reuters via Business Standard, 16 h 49 GMT","https://business-standard.com/amp/world-news/oil-falls-2-as-europe-agrees-to-release-diesel-reserves-after-trump-push-126100201048_1.html","100,50"],["EnergyNow (02/10)","https://energynow.com/2026/10/oil-ends-volatile-week-mixed-as-emergency-reserve-release-knocks-wti-lower-but-brent-holds-above-102","102,25"]],
+   note:"EnergyNow annonce 102,25 $ (−0,06 $), en contradiction avec Yahoo et Reuters (baisse d'environ 2 $). Valeur Yahoo retenue. Tendances : 72,68 $ (clôture du 01/07, Fortune) et 109,03 $ (règlement du 02/04, Wikipédia)."},
+  {n:"Sur la semaine",s:"",p:"−4,1 %",c:"",d:"down",st:"one",t3:"",t6:"",src:[["Yahoo Finance","https://finance.yahoo.com/energy/articles/oil-rises-slightly-market-weighs-010952829.html","−4,1 %"]]}
+ ],
+ gnr:[
+  {n:"GNR agricole",s:"mi-septembre · prix pro",p:"137,86 €/hl",c:"",d:"flat",st:"one",t3:"hausse",t6:"n.d.",
+   src:[["Chambre d'agriculture de Normandie","https://normandie.chambres-agriculture.fr/sinformer/rechercher-innover/economie-et-politiques-publiques/conjoncture-des-marches/detail-du-dossier-conjoncture/conjoncture-prix-gnr","137,86 €/hl"]],note:"La source ne précise pas HT ou TTC."},
+  {n:"GNR ordinaire (contrôle)",s:"moyenne nationale 03/10 · 1 000 L",p:"190,80 €/hl",c:"−14 €/1 000 L sur 7 j",d:"down",st:"one",t3:"n.d.",t6:"n.d.",
+   src:[["FioulReduc","https://www.fioulreduc.com/prix-gnr","1,908 €/L"]],note:"Fourchette régionale de 1,850 €/L (Bretagne) à 1,979 €/L (Alsace)."}
+ ],
+ azote:[
+  {n:"Solution azotée N30",s:"Rouen départ · 02/10",p:"452,75 €/t",c:"+1,50",d:"up",st:"gap",t3:"n.d.",t6:"n.d.",
+   src:[["Terre-net","https://www.terre-net.fr/marche-agricole/solution-azotee/engrais","452,75"],["Pleinchamp / Argus, FOT Rouen (30/09)","https://www.pleinchamp.com/les-cours/intrants/20-solution-azotee","447,50"],["La Dépêche, tendance août","https://www.reussir.fr/ladepeche/marche-des-engrais-le-prix-de-la-solution-azotee-fortement-augmente-en-aout-2026","+35 €/t en août"]],
+   note:"Pas de cotation publique de la N39. Historique détaillé réservé aux abonnés Terre-net. Coût de l'unité : 1,509 €/kg N."}
+ ],
+ sucre11:[
+  {n:"Mars 2027",s:"échéance de tête",p:"19,93",c:"+0,99 (+5,23 %)",d:"up",st:"ok",t3:"+26,38 %",t6:"+22,34 %",src:[[CZ,CZO,"19,93"],[CMB11,CMB11U,"18,94 + 0,99"],[BC,BCU,"+0,99 (+5,23 %)"]],note:"Références : 15,77 le 02/07 et 16,29 le 02/04 (Czarnikow). Plus haut de vie du contrat : 19,96."},
+  {n:"Mai 2027",p:"19,17",c:"+0,79",d:"up",st:"ok",t3:"+22,88 %",t6:"+19,51 %",src:[[CZ,CZO,"19,17"],[CMB11,CMB11U,"18,38 + 0,79"]],note:"Références : 15,60 le 02/07 et 16,04 le 02/04."},
+  {n:"Juil. 2027",p:"18,68",c:"+0,61",d:"up",st:"ok",t3:"+19,51 %",t6:"+16,90 %",src:[[CZ,CZO,"18,68"],[CMB11,CMB11U,"18,07 + 0,61"]],note:"Références : 15,63 le 02/07 et 15,98 le 02/04."},
+  {n:"Oct. 2027",p:"18,57",c:"+0,48",d:"up",st:"ok",t3:"+16,35 %",t6:"+14,70 %",src:[[CZ,CZO,"18,57"],[CMB11,CMB11U,"18,09 + 0,48"]],note:"Références : 15,96 le 02/07 et 16,19 le 02/04."},
+  {n:"Mars 2028",p:"18,82",c:"+0,37",d:"up",st:"ok",t3:"+12,97 %",t6:"+12,43 %",src:[[CZ,CZO,"18,82"],[CMB11,CMB11U,"18,45 + 0,37"]],note:"Références : 16,66 le 02/07 et 16,74 le 02/04."}
+ ],
+ sucre5:[
+  {n:"Déc. 2026",s:"échéance de tête",p:"531,50",c:"+24,20 (+4,77 %)",d:"up",st:"ok",t3:"+12,39 %",t6:"+19,14 %",src:[[CZ,CZO,"531,50"],[CMB5,CMB5U,"507,30 + 24,20"],[BC,BCU,"+24,20 (+4,77 %)"]],note:"Références : 472,90 le 02/07 et 446,10 le 02/04 (Czarnikow)."},
+  {n:"Mars 2027",p:"545,40",c:"+24,30",d:"up",st:"ok",t3:"+15,33 %",t6:"+20,69 %",src:[[CZ,CZO,"545,40"],[CMB5,CMB5U,"521,10 + 24,30"]],note:"Références : 472,90 le 02/07 et 451,90 le 02/04."},
+  {n:"Mai 2027",p:"550,60",c:"+23,00",d:"up",st:"ok",t3:"+16,60 %",t6:"+21,79 %",src:[[CZ,CZO,"550,60"],[CMB5,CMB5U,"527,60 + 23,00"]],note:"Références : 472,20 le 02/07 et 452,10 le 02/04."},
+  {n:"Août 2027",p:"544,00",c:"+19,90",d:"up",st:"ok",t3:"+16,41 %",t6:"+20,59 %",src:[[CZ,CZO,"544,00"],[CMB5,CMB5U,"524,10 + 19,90"]],note:"Références : 467,30 le 02/07 et 451,10 le 02/04."},
+  {n:"Oct. 2027",key:1,p:"534,70",c:"+15,30",d:"up",st:"ok",t3:"+15,31 %",t6:"+18,17 %",src:[[CZ,CZO,"534,70"],[CMB5,CMB5U,"519,40 + 15,30"]],note:"Références : 463,70 le 02/07 et 452,50 le 02/04."}
+ ],
+ sucre_phys:[
+  {n:"Pologne · Kalisz FCA",s:"granulé standard",p:"0,58 €/kg",c:"",d:"flat",st:"one",t3:"n.d.",t6:"n.d.",src:[["CMB News (02/10)",CMB5U,"0,58 €/kg"]]},
+  {n:"Lituanie · Marijampole FCA",s:"ICUMSA 45, cat. II",p:"0,52 €/kg",c:"",d:"flat",st:"one",t3:"n.d.",t6:"n.d.",src:[["CMB News (02/10)",CMB5U,"0,52 €/kg"]]}
+ ],
+ indices:[
+  {n:"CAC 40",s:"semaine −2,24 %",p:"7 897,19",c:"+0,79 %",d:"up",st:"one",src:[["BFM Bourse","https://www.tradingsat.com/cac-40-FR0003500008/actualites/cac-40-soutenu-par-la-baisse-des-prix-du-petrole-le-cac-40-termine-dans-le-vert-mais-cede-22-sur-la-semaine-1171214.html","7 897,19"]]},
+  {n:"Euro Stoxx 50",s:"semaine −1,10 %",p:"6 233,29",c:"+0,94 %",d:"up",st:"gap",src:[["MarketScreener","https://www.marketscreener.com/quote/index/EURO-STOXX-50-7396/","6 233,29"],["Trading Economics","https://tradingeconomics.com/euro-area/stock-market","6 241,75"]]},
+  {n:"Dow Jones",s:"",p:"51 176,96",c:"+0,49 %",d:"up",st:"one",src:[["Yahoo Finance","https://finance.yahoo.com/markets/live/stock-market-today-friday-october-2-dow-sp-500-nasdaq-september-jobs-report-080623878.html","51 176,96"]]},
+  {n:"Nasdaq Composite",s:"",p:"27 190,86",c:"+1,19 %",d:"up",st:"one",src:[["Yahoo Finance","https://finance.yahoo.com/markets/live/stock-market-today-friday-october-2-dow-sp-500-nasdaq-september-jobs-report-080623878.html","27 190,86"]]},
+  {n:"Nikkei 225",s:"plus haut de clôture sur 6 semaines",p:"68 956,72",c:"+3,3 %",d:"up",st:"one",src:[["Business Recorder (Reuters)","https://www.brecorder.com/news/40442227/nikkei-logs-six-week-closing-high","68 956,72"]]}
+ ],
+ taux:[
+  {n:"États-Unis",p:"5,283",c:"+4,1 pb",d:"up",st:"ok",src:[["Trading Economics","https://tradingeconomics.com/bonds","5,283"],["Yahoo Finance","https://finance.yahoo.com/markets/live/stock-market-today-friday-october-2-dow-sp-500-nasdaq-september-jobs-report-080623878.html","5,28"]]},
+  {n:"Royaume-Uni",p:"5,377",c:"+1,4 pb",d:"up",st:"one",src:[["Trading Economics","https://tradingeconomics.com/bonds","5,377"]]},
+  {n:"Allemagne",p:"3,465",c:"+5,6 pb",d:"up",st:"one",src:[["Trading Economics","https://tradingeconomics.com/bonds","3,4645"]]},
+  {n:"France",p:"4,866",c:"+3,6 pb",d:"up",st:"ok",src:[["Trading Economics","https://tradingeconomics.com/bonds","4,866"],["BFM Bourse","https://www.tradingsat.com/cac-40-FR0003500008/actualites/cac-40-soutenu-par-la-baisse-des-prix-du-petrole-le-cac-40-termine-dans-le-vert-mais-cede-22-sur-la-semaine-1171214.html","4,87"]]},
+  {n:"Italie",p:"4,609",c:"+9,9 pb",d:"up",st:"one",src:[["Trading Economics","https://tradingeconomics.com/bonds","4,6091"]]},
+  {n:"Japon",p:"3,111",c:"+0,9 pb",d:"up",st:"one",src:[["Trading Economics","https://tradingeconomics.com/bonds","3,111"]]},
+  {n:"Canada",p:"3,945",c:"+1,4 pb",d:"up",st:"one",src:[["Trading Economics","https://tradingeconomics.com/bonds","3,945"]]},
+  {n:"Zone euro",s:"au 01/10",p:"4,12",c:"+6 pb",d:"up",st:"one",src:[["Trading Economics","https://tradingeconomics.com/bonds","4,12"]],note:"Valeur du 01/10, la plus récente publiée."}
+ ],
+ mm:[
+  {n:"Euribor 1 mois",s:"fixing 02/10",p:"2,437",c:"+0,3 pb",d:"up",st:"one",src:[["euribor-rates.eu (données EMMI)","https://www.euribor-rates.eu/fr/taux-euribor-actuels/","2,437"]],note:"Veille : 2,434 %."},
+  {n:"Euribor 3 mois",s:"fixing 02/10",p:"2,598",c:"+0,9 pb",d:"up",st:"one",src:[["euribor-rates.eu (données EMMI)","https://www.euribor-rates.eu/fr/taux-euribor-actuels/","2,598"]],note:"Veille : 2,589 %."},
+  {n:"Euribor 12 mois",s:"fixing 02/10",p:"3,323",c:"+2,0 pb",d:"up",st:"one",src:[["euribor-rates.eu (données EMMI)","https://www.euribor-rates.eu/fr/taux-euribor-actuels/","3,323"]],note:"Veille : 3,303 %."},
+  {n:"Mid-swap EUR 10 ans",s:"fixe annuel contre Euribor 6 mois · 16 h 58 Londres",p:"3,59",c:"−5 pb",d:"down",st:"ok",src:[["BlueGamma","https://www.bluegamma.io/euribor-swap-rates/10-year-euribor-swap-rate","3,59"],["Oblig.fr","https://www.oblig.fr/def/swap-de-taux/","3,59"]],note:"Veille : 3,64 % (BlueGamma). Investing.com donne 3,606 % au 01/10."}
+ ]
+}};
+
+/* ===== RENDU ===== */
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+var ARW={up:"▲ ",down:"▼ ",flat:""};
+var ST={ok:["ok","2 sources"],gap:["gap","écart"],one:["","1 source"]};
+function trendPill(lbl,v){
+  if(!v) return "";
+  var cls=/^\+/.test(v)?"up":(/^[−-]/.test(v)?"down":"");
+  return '<span class="pill tr '+cls+'">'+lbl+' '+esc(v)+'</span>';
+}
+function row(r){
+  var st=ST[r.st]||ST.one;
+  var h='<details class="row"><summary><div class="r-name"><b>'+esc(r.n)+'</b>'+(r.s?'<i>'+esc(r.s)+'</i>':'')+'</div>'+
+    '<div class="r-val"><span class="p">'+esc(r.p)+'</span>'+(r.c?'<span class="chg '+r.d+'">'+ARW[r.d]+esc(r.c)+'</span>':'')+'</div>'+
+    '<div class="r-meta">'+(r.key?'<span class="pill key">récolte</span>':'')+'<span class="pill '+st[0]+'">'+st[1]+'</span>'+trendPill("3 m",r.t3)+trendPill("6 m",r.t6)+'</div></summary>'+
+    '<div class="r-detail">';
+  (r.src||[]).forEach(function(s,i){
+    h+='<div class="srcline"><span class="tag">'+(i===0?'Principale':'Contrôle')+'</span><a href="'+esc(s[1])+'" target="_blank" rel="noopener">'+esc(s[0])+'</a><span class="v">'+esc(s[2])+'</span></div>';
+  });
+  if(r.note) h+='<div class="r-note">'+esc(r.note)+'</div>';
+  return h+'</div></details>';
+}
+function render(){
+  document.getElementById('asof').textContent=DATA.asof;
+  Object.keys(DATA.lists).forEach(function(k){
+    var el=document.querySelector('[data-list="'+k+'"]'); if(el) el.innerHTML=DATA.lists[k].map(row).join('');
+  });
+  Object.keys(DATA.hero).forEach(function(k){
+    var el=document.querySelector('[data-hero="'+k+'"]'); if(!el) return;
+    el.innerHTML=DATA.hero[k].map(function(t){return '<div class="tile"><span class="lbl">'+esc(t.l)+'</span><span class="val">'+esc(t.v)+'<u>'+esc(t.u)+'</u></span><span class="chg '+t.d+'">'+ARW[t.d]+esc(t.c)+'</span></div>'}).join('');
+  });
+}
+render();
+
+/* ===== ONGLETS ===== */
+var tabs=[].slice.call(document.querySelectorAll('nav.tabs button'));
+function show(id){
+  tabs.forEach(function(b){var on=b.id===id;b.setAttribute('aria-selected',on?'true':'false');document.getElementById(b.getAttribute('aria-controls')).hidden=!on;if(on&&b.scrollIntoView)b.scrollIntoView({block:'nearest',inline:'nearest'})});
+  try{localStorage.setItem('mf-tab',id)}catch(e){}
+  if(id==='t-meteo') startWeather();
+}
+tabs.forEach(function(b){b.addEventListener('click',function(){show(b.id)})});
+
+/* ===== RECHERCHE CAPITAL MARKETS (multi-sources) ===== */
+document.getElementById('cm-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  var q=document.getElementById('cm-q').value.trim(); var box=document.getElementById('cm-links');
+  if(!q){box.hidden=true;return}
+  var u=encodeURIComponent(q);
+  var L=[["Boursorama","https://www.boursorama.com/recherche/?query="+u],["Euronext","https://live.euronext.com/fr/search_instruments/"+u],["Investing.com","https://fr.investing.com/search/?q="+u],["Yahoo Finance","https://finance.yahoo.com/lookup?s="+u],["Zonebourse","https://www.zonebourse.com/recherche/?q="+u],["Google Finance","https://www.google.com/finance?q="+u]];
+  box.innerHTML=L.map(function(l){return '<a href="'+l[1]+'" target="_blank" rel="noopener">'+l[0]+' ↗</a>'}).join('');
+  box.hidden=false;
+  document.getElementById('cm-hint').textContent='« '+q+' » : ouvrez au moins deux fournisseurs pour confirmer le cours.';
+});
+
+/* ===== MÉTÉO (Open-Meteo, sans clé) ===== */
+var DEFAULT_LOC={name:"Verberie (60410)",lat:49.311,lon:2.732};
+var loc=DEFAULT_LOC;
+try{var sv=JSON.parse(localStorage.getItem('mf-om-loc')||'null'); if(sv&&sv.lat!=null) loc=sv}catch(e){}
+var WX={fc:null,hist:null,recent:null,range:90,fetchedAt:0};
+try{var rr=+localStorage.getItem('mf-om-range'); if(rr===30||rr===90||rr===365) WX.range=rr}catch(e){}
+function $(id){return document.getElementById(id)}
+function f1(n){return n==null||isNaN(n)?'–':(Math.round(n*10)/10).toFixed(1).replace('.',',')}
+function f0(n){return n==null||isNaN(n)?'–':String(Math.round(n))}
+function iso(d){return d.toLocaleDateString('sv-SE',{timeZone:'Europe/Paris'})}
+function addDays(s,n){var d=new Date(s+'T12:00:00Z'); d.setUTCDate(d.getUTCDate()+n); return d.toISOString().slice(0,10)}
+function shortDate(s){var p=s.split('-');return p[2]+'/'+p[1]}
+var JOURS=['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'], MOIS=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+function dow(s){return JOURS[new Date(s+'T12:00:00Z').getUTCDay()]}
+function compass(deg){var p=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];return deg==null?'':p[Math.round(((deg%360)+360)%360/22.5)%16]}
+var WMO={0:'Ciel clair',1:'Peu nuageux',2:'Partiellement nuageux',3:'Couvert',45:'Brouillard',48:'Brouillard givrant',51:'Bruine légère',53:'Bruine',55:'Bruine forte',56:'Bruine verglaçante',57:'Bruine verglaçante forte',61:'Pluie faible',63:'Pluie',65:'Pluie forte',66:'Pluie verglaçante',67:'Pluie verglaçante forte',71:'Neige faible',73:'Neige',75:'Neige forte',77:'Grains de neige',80:'Averses faibles',81:'Averses',82:'Averses violentes',85:'Averses de neige',86:'Fortes averses de neige',95:'Orage',96:'Orage avec grêle',99:'Orage, forte grêle'};
+function glyph(code,night){
+  code=+code||0;
+  var sun='<circle cx="16" cy="14" r="6" fill="var(--accent)"/>';
+  var moon='<path d="M19 8a7 7 0 1 0 5 11a6 6 0 0 1-5-11z" fill="var(--muted)"/>';
+  var cloud='<path d="M9 25h15a5 5 0 0 0 0-10a7 7 0 0 0-13.4 2.2A4 4 0 0 0 9 25z" fill="var(--muted)" opacity=".85"/>';
+  var drops='<path d="M11 28l-1.5 3M17 28l-1.5 3M23 28l-1.5 3" stroke="var(--sky)" stroke-width="2" stroke-linecap="round"/>';
+  var bolt='<path d="M17 26l-3 5h3l-2 4 5-6h-3l2-3z" fill="var(--accent)"/>';
+  var snow='<circle cx="11" cy="30" r="1.5" fill="var(--sky)"/><circle cx="17" cy="32" r="1.5" fill="var(--sky)"/><circle cx="23" cy="30" r="1.5" fill="var(--sky)"/>';
+  var fog='<path d="M6 22h22M8 27h18M10 32h14" stroke="var(--muted)" stroke-width="2" stroke-linecap="round"/>';
+  var lum=night?moon:sun, b;
+  if(code===0||code===1) b=lum; else if(code===2) b=lum+cloud; else if(code===3) b=cloud;
+  else if(code===45||code===48) b=fog; else if(code>=95) b=cloud+bolt;
+  else if((code>=71&&code<=77)||code===85||code===86) b=cloud+snow;
+  else if(code>=51) b=cloud+drops; else b=cloud;
+  return '<svg viewBox="0 0 34 36" aria-hidden="true">'+b+'</svg>';
+}
+var SEV=[0,1,2,3,45,48,51,53,55,56,57,61,63,80,65,81,66,67,82,71,73,85,75,86,77,95,96,99];
+function worst(codes){var best=0,bi=-1;codes.forEach(function(c){var i=SEV.indexOf(+c);if(i>bi){bi=i;best=c}});return best}
+
+/* --- réseau, avec repli hors ligne --- */
+function getJSON(url,key){
+  return fetch(url).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json() })
+    .then(function(j){ try{localStorage.setItem(key,JSON.stringify({t:Date.now(),d:j}))}catch(e){} return {d:j,t:Date.now(),live:true} })
+    .catch(function(err){ try{var c=JSON.parse(localStorage.getItem(key)||'null'); if(c) return {d:c.d,t:c.t,live:false}}catch(e){} throw err });
+}
+function base(){return 'latitude='+loc.lat+'&longitude='+loc.lon+'&timezone=Europe%2FParis'}
+function urlForecast(){return 'https://api.open-meteo.com/v1/forecast?'+base()+'&forecast_days=10'+
+  '&current=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,cloud_cover,pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m,is_day'+
+  '&hourly=temperature_2m,precipitation,precipitation_probability,weather_code,sunshine_duration,is_day'+
+  '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,sunshine_duration'}
+function urlRecent(){return 'https://api.open-meteo.com/v1/forecast?'+base()+'&past_days=14&forecast_days=1&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,sunshine_duration'}
+function urlArchive(){var end=addDays(iso(new Date()),-1), start=addDays(end,-729);
+  return 'https://archive-api.open-meteo.com/v1/archive?'+base()+'&start_date='+start+'&end_date='+end+'&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,sunshine_duration'}
+function keyFor(k){return 'mf-om-'+k+'-'+loc.lat.toFixed(3)+','+loc.lon.toFixed(3)}
+
+/* --- maintenant --- */
+function renderNow(fc,meta){
+  var c=fc.current||{};
+  $('wx-now').innerHTML='<div class="big">'+glyph(c.weather_code,!c.is_day)+'<span class="temp">'+f0(c.temperature_2m)+'°</span></div>'+
+    '<div><div class="phr">'+(WMO[c.weather_code]||'')+'</div><div class="rf">Ressenti '+f0(c.apparent_temperature)+'° · '+(c.time?c.time.slice(11,16):'')+'</div></div>';
+  var h=fc.hourly||{}, idx=nowIndex(fc), rain24=0, sunToday=0, today=iso(new Date());
+  for(var i=Math.max(0,idx-23);i<=idx&&i<(h.precipitation||[]).length;i++) rain24+=h.precipitation[i]||0;
+  var d=fc.daily||{}, di=(d.time||[]).indexOf(today);
+  var facts=[["Pluie aujourd'hui",di>=0?f1(d.precipitation_sum[di])+' mm':'–'],["Soleil aujourd'hui",di>=0?f1(d.sunshine_duration[di]/3600)+' h':'–'],
+    ["Vent",f0(c.wind_speed_10m)+' km/h '+compass(c.wind_direction_10m)+' · raf. '+f0(c.wind_gusts_10m)],["Humidité",f0(c.relative_humidity_2m)+' %'],["Nuages",f0(c.cloud_cover)+' %'],["Pression",f0(c.pressure_msl)+' hPa']];
+  $('wx-facts').innerHTML=facts.map(function(f){return '<div class="fact"><span class="k">'+f[0]+'</span><span class="v">'+f[1]+'</span></div>'}).join('');
+  var t=new Date(meta.t).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  $('wx-status').textContent=(meta.live?'Open-Meteo · actualisé à ':'Hors ligne · dernières données de ')+t;
+}
+function nowIndex(fc){var h=fc.hourly||{}, ct=(fc.current&&fc.current.time||'').slice(0,13); var i=(h.time||[]).findIndex(function(t){return t.slice(0,13)===ct}); return i<0?0:i}
+
+/* --- 24 heures --- */
+function renderHourly(fc){
+  var h=fc.hourly||{}, i0=nowIndex(fc), N=24, idx=[];
+  for(var i=i0;i<i0+N&&i<(h.time||[]).length;i++) idx.push(i);
+  if(!idx.length){$('wx-hourly').innerHTML='<div class="empty">Pas de prévision horaire.</div>';return}
+  var W=720,x0=30,x1=W-14,step=(x1-x0)/(idx.length-1);
+  var ts=idx.map(function(i){return h.temperature_2m[i]}), lo=Math.min.apply(null,ts)-1, hi=Math.max.apply(null,ts)+1;
+  function ty(t){return 100-(t-lo)/(hi-lo)*72}
+  var rmax=Math.max(2,Math.max.apply(null,idx.map(function(i){return h.precipitation[i]||0})));
+  var s='<svg viewBox="0 0 '+W+' 214" role="img" aria-label="Température, pluie et soleil heure par heure">',p='';
+  s+='<line class="ch-grid" x1="'+x0+'" x2="'+x1+'" y1="166" y2="166"/>';
+  idx.forEach(function(i,k){
+    var x=x0+k*step, y=ty(h.temperature_2m[i]); p+=(k?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);
+    var r=h.precipitation[i]||0, pr=h.precipitation_probability?h.precipitation_probability[i]:null, bh=r/rmax*44;
+    if(r>0) s+='<rect class="ch-rain" x="'+(x-6).toFixed(1)+'" y="'+(166-bh).toFixed(1)+'" width="12" height="'+Math.max(1,bh).toFixed(1)+'" rx="2"/>';
+    if(r>=0.1||(pr!=null&&pr>=30)) s+='<text class="ch-rainlbl" x="'+x.toFixed(1)+'" y="'+(r>0?(161-bh):160).toFixed(1)+'" text-anchor="middle">'+(r>=0.1?f1(r):(pr+'%'))+'</text>';
+    var sun=(h.sunshine_duration[i]||0)/3600;
+    s+= h.is_day[i]? '<rect class="ch-sun" x="'+(x-step/2+.5).toFixed(1)+'" y="174" width="'+(step-1).toFixed(1)+'" height="9" rx="2" opacity="'+(0.1+sun*0.85).toFixed(2)+'"/>'
+                   : '<rect class="ch-night" x="'+(x-step/2+.5).toFixed(1)+'" y="174" width="'+(step-1).toFixed(1)+'" height="9" rx="2"/>';
+    if(k%3===0) s+='<text class="ch-ax" x="'+x.toFixed(1)+'" y="200" text-anchor="middle">'+h.time[i].slice(11,13)+' h</text>';
+  });
+  s+='<path class="ch-t" d="'+p+'"/>';
+  idx.forEach(function(i,k){ if(k%2) return; var x=x0+k*step,y=ty(h.temperature_2m[i]); s+='<circle class="ch-tdot" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="3"/><text class="ch-val" x="'+x.toFixed(1)+'" y="'+(y-8).toFixed(1)+'" text-anchor="middle">'+f0(h.temperature_2m[i])+'°</text>'});
+  s+='</svg>';
+  $('wx-hourly').innerHTML=s;
+}
+
+/* --- 10 jours par moment --- */
+var MOMENTS=[["Nuit",0,6],["Matin",6,12],["Aprèm",12,18],["Soir",18,24]];
+function renderDaily(fc){
+  var d=fc.daily||{}, h=fc.hourly||{}, n=(d.time||[]).length; if(!n){$('wx-days').innerHTML='<div class="empty">Pas de prévision.</div>';return}
+  var tot=0,tot5=0,sunT=0; d.precipitation_sum.forEach(function(r,i){tot+=r||0; if(i<5) tot5+=r||0; sunT+=(d.sunshine_duration[i]||0)/3600});
+  $('wx-total').innerHTML='<div class="tile"><span class="lbl">Pluie 5 j</span><span class="val">'+f1(tot5)+'<u>mm</u></span></div>'+
+    '<div class="tile"><span class="lbl">Pluie '+n+' j</span><span class="val">'+f1(tot)+'<u>mm</u></span></div>'+
+    '<div class="tile"><span class="lbl">Soleil '+n+' j</span><span class="val">'+f0(sunT)+'<u>h</u></span></div>';
+  var W=640,x0=34,x1=W-18,step=(x1-x0)/(n-1), vals=d.temperature_2m_max.concat(d.temperature_2m_min), lo=Math.floor(Math.min.apply(null,vals))-1, hi=Math.ceil(Math.max.apply(null,vals))+1, rmax=Math.max(5,Math.max.apply(null,d.precipitation_sum));
+  function ty(t){return 112-(t-lo)/(hi-lo)*92}
+  var s='<svg viewBox="0 0 '+W+' 214" role="img" aria-label="Prévision 10 jours">',pmx='',pmn='';
+  s+='<line class="ch-grid" x1="'+x0+'" x2="'+x1+'" y1="176" y2="176"/>';
+  d.time.forEach(function(t,i){ var x=x0+i*step, r=d.precipitation_sum[i]||0, bh=r/rmax*44;
+    pmx+=(i?'L':'M')+x.toFixed(1)+' '+ty(d.temperature_2m_max[i]).toFixed(1); pmn+=(i?'L':'M')+x.toFixed(1)+' '+ty(d.temperature_2m_min[i]).toFixed(1);
+    if(r>0) s+='<rect class="ch-rain" opacity=".55" x="'+(x-9)+'" y="'+(176-bh).toFixed(1)+'" width="18" height="'+Math.max(1,bh).toFixed(1)+'" rx="2"/><text class="ch-rainlbl" x="'+x.toFixed(1)+'" y="'+(171-bh).toFixed(1)+'" text-anchor="middle">'+f1(r)+'</text>';
+    s+='<text class="ch-ax" x="'+x.toFixed(1)+'" y="194" text-anchor="middle">'+dow(t)+'</text><text class="ch-ax" x="'+x.toFixed(1)+'" y="207" text-anchor="middle">'+t.slice(8)+'</text>';
+  });
+  s+='<path class="ch-t" d="'+pmx+'"/><path class="ch-tmin" d="'+pmn+'"/>';
+  d.time.forEach(function(t,i){var x=x0+i*step,y=ty(d.temperature_2m_max[i]),y2=ty(d.temperature_2m_min[i]); s+='<circle class="ch-tdot" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="3"/><text class="ch-val" x="'+x.toFixed(1)+'" y="'+(y-8).toFixed(1)+'" text-anchor="middle">'+f0(d.temperature_2m_max[i])+'°</text><text class="ch-ax" x="'+x.toFixed(1)+'" y="'+(y2+15).toFixed(1)+'" text-anchor="middle">'+f0(d.temperature_2m_min[i])+'°</text>'});
+  $('wx-10d').innerHTML=s+'</svg>';
+  /* moments */
+  var byDay={}; (h.time||[]).forEach(function(t,i){var k=t.slice(0,10),hr=+t.slice(11,13); (byDay[k]=byDay[k]||[]).push({hr:hr,i:i})});
+  var rmM=0, rows=d.time.map(function(day,di){
+    var cells=MOMENTS.map(function(m){
+      var pts=(byDay[day]||[]).filter(function(o){return o.hr>=m[1]&&o.hr<m[2]}); if(!pts.length) return null;
+      var tt=pts.map(function(o){return h.temperature_2m[o.i]}), rain=0,sun=0,pr=0; pts.forEach(function(o){rain+=h.precipitation[o.i]||0; sun+=(h.sunshine_duration[o.i]||0)/3600; pr=Math.max(pr,h.precipitation_probability?(h.precipitation_probability[o.i]||0):0)});
+      if(rain>rmM) rmM=rain;
+      return {m:m[0],tmin:Math.min.apply(null,tt),tmax:Math.max.apply(null,tt),rain:rain,sun:sun,pr:pr,code:worst(pts.map(function(o){return h.weather_code[o.i]})),night:m[0]==='Nuit'};
+    });
+    return {day:day,cells:cells,di:di};
+  });
+  rmM=Math.max(3,rmM);
+  $('wx-days').innerHTML=rows.map(function(r){
+    return '<div class="dn-day m4"><div class="dn-date"><b>'+dow(r.day)+' '+r.day.slice(8)+'</b>'+MOIS[+r.day.slice(5,7)-1]+'<small>'+f1(d.precipitation_sum[r.di])+' mm · '+f1(d.sunshine_duration[r.di]/3600)+' h</small></div>'+
+      r.cells.map(function(c){ if(!c) return '<div class="slot"></div>';
+        return '<div class="slot mm '+(c.night?'':'day')+'"><div class="mm-l">'+c.m+'</div><div class="mm-t">'+glyph(c.code,c.night)+'<b>'+(c.night?f0(c.tmin):f0(c.tmax))+'°</b></div>'+
+          '<div class="mm-r">'+f1(c.rain)+' mm</div><div class="mm-r">'+(c.pr!=null?c.pr+' %':'')+'</div><div class="mm-s">'+(c.night?'max '+f0(c.tmax)+'°':'☀ '+f1(c.sun)+' h')+'</div>'+
+          '<div class="rainbar"><span style="width:'+Math.min(100,c.rain/rmM*100).toFixed(0)+'%"></span></div></div>' }).join('')+'</div>';
+  }).join('');
+}
+
+/* --- historique --- */
+function histSeries(){
+  var out={}; [WX.hist,WX.recent].forEach(function(src){ var d=src&&src.daily; if(!d) return;
+    d.time.forEach(function(t,i){ var v={tmax:d.temperature_2m_max[i],tmin:d.temperature_2m_min[i],rain:d.precipitation_sum[i],sun:d.sunshine_duration[i]==null?null:d.sunshine_duration[i]/3600};
+      if(v.tmax==null&&v.rain==null) return; if(!out[t]||out[t].tmax==null) out[t]=v; else if(src===WX.recent&&out[t].rain==null) out[t]=v; }); });
+  return out;
+}
+function sumRange(S,start,end){ var r={rain:0,sun:0,tmax:0,tmin:0,n:0,rd:0,miss:0}; for(var t=start;t<=end;t=addDays(t,1)){var v=S[t]; if(!v||v.rain==null){r.miss++;continue} r.rain+=v.rain; r.sun+=(v.sun||0); r.tmax+=v.tmax; r.tmin+=v.tmin; r.n++; if(v.rain>=1) r.rd++} if(r.n){r.tmax/=r.n;r.tmin/=r.n} return r }
+function renderHist(){
+  var S=histSeries(), end=addDays(iso(new Date()),-1), start=addDays(end,-(WX.range-1)), keys=[];
+  for(var t=start;t<=end;t=addDays(t,1)) if(S[t]) keys.push(t);
+  if(!keys.length){$('wx-hist-chart').innerHTML='<div class="empty">Historique indisponible pour le moment.</div>';return}
+  var cur=sumRange(S,start,end), prev=sumRange(S,addDays(start,-365),addDays(end,-365));
+  function dlt(a,b,u,dec){ if(!prev.n) return ''; var d=a-b; return '<span class="chg '+(d>0?'up':(d<0?'down':'flat'))+'">'+(d>0?'+':'')+(dec?f1(d):f0(d))+' '+u+' vs an dernier</span>' }
+  $('wx-hist-tiles').innerHTML='<div class="tile"><span class="lbl">Pluie</span><span class="val">'+f0(cur.rain)+'<u>mm</u></span>'+dlt(cur.rain,prev.rain,'mm')+'</div>'+
+    '<div class="tile"><span class="lbl">Soleil</span><span class="val">'+f0(cur.sun)+'<u>h</u></span>'+dlt(cur.sun,prev.sun,'h')+'</div>'+
+    '<div class="tile"><span class="lbl">Max. moyen</span><span class="val">'+f1(cur.tmax)+'<u>°C</u></span>'+dlt(cur.tmax,prev.tmax,'°C',1)+'</div>';
+  /* agrégation hebdo au-delà de 120 jours */
+  var pts=[], weekly=keys.length>120;
+  if(weekly){ for(var i=0;i<keys.length;i+=7){ var g=keys.slice(i,i+7), a={t:g[0],rain:0,sun:0,tmax:0,tmin:0}; g.forEach(function(k){var v=S[k];a.rain+=v.rain||0;a.sun+=v.sun||0;a.tmax+=v.tmax;a.tmin+=v.tmin}); a.tmax/=g.length;a.tmin/=g.length; pts.push(a)} }
+  else pts=keys.map(function(k){var v=S[k];return {t:k,rain:v.rain||0,sun:v.sun||0,tmax:v.tmax,tmin:v.tmin}});
+  var W=720,x0=48,x1=W-12,n=pts.length,step=(x1-x0)/Math.max(1,n-1), bw=Math.max(2,Math.min(14,step*0.7));
+  var vals=[]; pts.forEach(function(p){vals.push(p.tmax,p.tmin)}); var lo=Math.floor(Math.min.apply(null,vals))-1, hi=Math.ceil(Math.max.apply(null,vals))+1;
+  var rmax=Math.max(5,Math.max.apply(null,pts.map(function(p){return p.rain}))), smax=Math.max(1,Math.max.apply(null,pts.map(function(p){return p.sun})));
+  function ty(t){return 92-(t-lo)/(hi-lo)*78}
+  var s='<svg viewBox="0 0 '+W+' 236" role="img" aria-label="Historique températures, pluie et ensoleillement">',a='',b='';
+  s+='<text class="ch-ax" x="0" y="14">'+(weekly?'moy. hebdo':'°C')+'</text><line class="ch-grid" x1="'+x0+'" x2="'+x1+'" y1="160" y2="160"/><line class="ch-grid" x1="'+x0+'" x2="'+x1+'" y1="206" y2="206"/>';
+  s+='<text class="ch-ax" x="0" y="124">pluie</text><text class="ch-ax" x="0" y="176">soleil</text>';
+  pts.forEach(function(p,i){ var x=x0+i*step;
+    a+=(i?'L':'M')+x.toFixed(1)+' '+ty(p.tmax).toFixed(1); b+=(i?'L':'M')+x.toFixed(1)+' '+ty(p.tmin).toFixed(1);
+    var rh=p.rain/rmax*44; if(p.rain>0) s+='<rect class="ch-rain" opacity=".6" x="'+(x-bw/2).toFixed(1)+'" y="'+(160-rh).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(1,rh).toFixed(1)+'"/>';
+    var sh=p.sun/smax*36; if(p.sun>0) s+='<rect class="ch-sun" opacity=".6" x="'+(x-bw/2).toFixed(1)+'" y="'+(206-sh).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(1,sh).toFixed(1)+'"/>';
+    var every=Math.ceil(n/8); if(i%every===0) s+='<text class="ch-ax" x="'+x.toFixed(1)+'" y="224" text-anchor="middle">'+shortDate(p.t)+'</text>';
+  });
+  s+='<path class="ch-t" d="'+a+'"/><path class="ch-tmin" d="'+b+'"/>';
+  s+='<text class="ch-ax" x="'+x1+'" y="'+(ty(hi)+10).toFixed(1)+'" text-anchor="end">'+hi+'°</text><text class="ch-ax" x="'+x1+'" y="'+(ty(lo)-3).toFixed(1)+'" text-anchor="end">'+lo+'°</text>';
+  s+='<text class="ch-rainlbl" x="'+x1+'" y="114" text-anchor="end">max '+f1(rmax)+' mm</text></svg>';
+  $('wx-hist-chart').innerHTML=s;
+  /* tableau mensuel */
+  var months={}; keys.forEach(function(k){var m=k.slice(0,7),v=S[k]; var o=months[m]=months[m]||{rain:0,sun:0,tmax:0,tmin:0,n:0,rd:0,days:[]}; o.rain+=v.rain||0;o.sun+=v.sun||0;o.tmax+=v.tmax;o.tmin+=v.tmin;o.n++;o.days.push(k); if(v.rain>=1)o.rd++});
+  var rows=Object.keys(months).sort().reverse().map(function(m){var o=months[m], p={rain:0,sun:0,n:0};
+    o.days.forEach(function(k){ var pk=(+k.slice(0,4)-1)+k.slice(4), v=S[pk]; if(v&&v.rain!=null){p.rain+=v.rain;p.sun+=v.sun||0;p.n++} });
+    return '<tr><td>'+MOIS[+m.slice(5)-1]+' '+m.slice(0,4)+(o.n<28?' <small>('+o.n+' j)</small>':'')+'</td><td>'+f1(o.rain)+'</td><td>'+o.rd+'</td><td>'+f0(o.sun)+'</td><td>'+f1(o.tmin/o.n)+' / '+f1(o.tmax/o.n)+'</td><td>'+(p.n?f1(p.rain)+' mm · '+f0(p.sun)+' h':'–')+'</td></tr>'});
+  $('wx-hist-tbl').innerHTML='<table class="hist-tbl"><thead><tr><th>Mois</th><th>Pluie mm</th><th>Jours ≥1 mm</th><th>Soleil h</th><th>Min / max moy. °C</th><th>Même période N-1</th></tr></thead><tbody>'+rows.join('')+'</tbody></table>';
+}
+
+/* --- chargement --- */
+function setBackup(){
+  var q=encodeURIComponent(loc.name.replace(/\s*\(.*\)/,''));
+  var links=[["Météo-France","https://meteofrance.com/recherche/"+q],["Infoclimat","https://www.infoclimat.fr/recherche/?q="+q],["AccuWeather","https://www.accuweather.com/fr/search-locations?query="+q]];
+  $('wx-backup').innerHTML=links.map(function(l){return '<a href="'+l[1]+'" target="_blank" rel="noopener">'+l[0]+' ↗</a>'}).join('');
+}
+function loadWeather(force){
+  $('wx-place').textContent=loc.name; setBackup();
+  if(!force&&WX.fc&&Date.now()-WX.fetchedAt<10*60000) return;
+  WX.fetchedAt=Date.now(); $('wx-status').textContent='Chargement…';
+  getJSON(urlForecast(),keyFor('fc')).then(function(r){WX.fc=r.d; renderNow(r.d,r); renderHourly(r.d); renderDaily(r.d)})
+    .catch(function(){$('wx-status').textContent="Prévisions indisponibles : pas de réseau et aucune donnée en mémoire. Utilisez les sources de contrôle."});
+  Promise.all([getJSON(urlArchive(),keyFor('hist')).catch(function(){return null}),getJSON(urlRecent(),keyFor('recent')).catch(function(){return null})])
+    .then(function(res){WX.hist=res[0]&&res[0].d; WX.recent=res[1]&&res[1].d; renderHist()});
+}
+[].forEach.call(document.querySelectorAll('.seg button'),function(b){
+  b.setAttribute('aria-pressed',+b.dataset.range===WX.range?'true':'false');
+  b.addEventListener('click',function(){WX.range=+b.dataset.range; try{localStorage.setItem('mf-om-range',WX.range)}catch(e){}
+    [].forEach.call(document.querySelectorAll('.seg button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')}); renderHist()});
+});
+$('wx-refresh').addEventListener('click',function(){loadWeather(true)});
+$('wx-form').addEventListener('submit',function(e){
+  e.preventDefault(); var q=$('wx-q').value.trim(), box=$('wx-results'); if(!q) return;
+  box.hidden=false; box.textContent='Recherche…';
+  fetch('https://geocoding-api.open-meteo.com/v1/search?count=10&language=fr&format=json&countryCode=FR&name='+encodeURIComponent(q))
+    .then(function(r){return r.json()}).then(function(j){
+      var list=(j&&j.results)||[]; if(/^\d{5}$/.test(q)){var f=list.filter(function(x){return (x.postcodes||[]).indexOf(q)>=0}); if(f.length) list=f}
+      if(!list.length){box.textContent='Aucune commune trouvée. Essayez le nom de la commune.';return}
+      box.innerHTML='';
+      list.forEach(function(it){var b=document.createElement('button'); b.type='button';
+        var pc=(it.postcodes&&it.postcodes[0])?' ('+it.postcodes[0]+')':''; b.textContent=it.name+pc+(it.admin2?' · '+it.admin2:'');
+        b.addEventListener('click',function(){loc={name:it.name+pc,lat:+it.latitude.toFixed(3),lon:+it.longitude.toFixed(3)}; try{localStorage.setItem('mf-om-loc',JSON.stringify(loc))}catch(e){} box.hidden=true; $('wx-q').value=''; WX.fc=null; loadWeather(true)});
+        box.appendChild(b)});
+      var r=document.createElement('button'); r.type='button'; r.textContent='Revenir à Verberie (60410)';
+      r.addEventListener('click',function(){loc=DEFAULT_LOC; try{localStorage.removeItem('mf-om-loc')}catch(e){} box.hidden=true; loadWeather(true)}); box.appendChild(r);
+    }).catch(function(){box.textContent='Recherche impossible sans réseau.'});
+});
+function startWeather(){ loadWeather(false) }
+document.addEventListener('visibilitychange',function(){ if(!document.hidden){ loadWeather(false); loadMarket() } });
+loadWeather(false);
+
+/* ===== COURS : data.json publié chaque soir, repli sur les données intégrées ===== */
+function loadMarket(){
+  fetch('data.json',{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json() }).then(function(j){
+    if(j&&j.lists&&j.asof){ DATA=j; render(); try{localStorage.setItem('mf-data',JSON.stringify(j))}catch(e){} }
+  }).catch(function(){ try{var c=JSON.parse(localStorage.getItem('mf-data')||'null'); if(c&&c.lists){DATA=c; render()}}catch(e){} });
+}
+loadMarket();
+
+/* ouverture */
+(function(){
+  var map={recap:'t-recap',grains:'t-grains',intrants:'t-intrants',sucre:'t-sucre',marches:'t-cm',meteo:'t-meteo'};
+  var h=(location.hash||'').slice(1), saved=null; try{saved=localStorage.getItem('mf-tab')}catch(e){}
+  if(map[h]) show(map[h]); else if(saved&&document.getElementById(saved)) show(saved);
+})();
+
+if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}) }) }
+(function(){ var standalone=window.navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches); if(!standalone&&/iPhone|iPad/.test(navigator.userAgent)) document.getElementById('install-hint').hidden=false })();
+</script>
+</body>
+</html>

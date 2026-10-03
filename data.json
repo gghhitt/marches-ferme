@@ -1,0 +1,1309 @@
+{
+ "asof": "vendredi 2 octobre 2026",
+ "hero": {
+  "ble": [
+   {
+    "l": "Échéance déc. 2026",
+    "v": "241,50",
+    "u": "€/t",
+    "c": "+2,50",
+    "d": "up"
+   },
+   {
+    "l": "Récolte 2027 · sept. 2027",
+    "v": "233,75",
+    "u": "€/t",
+    "c": "+1,00",
+    "d": "up"
+   }
+  ],
+  "mais": [
+   {
+    "l": "Échéance nov. 2026",
+    "v": "269,00",
+    "u": "€/t",
+    "c": "+2,50",
+    "d": "up"
+   },
+   {
+    "l": "Récolte 2027 · nov. 2027",
+    "v": "230,75",
+    "u": "€/t",
+    "c": "+0,50",
+    "d": "up"
+   }
+  ],
+  "sucre": [
+   {
+    "l": "Roux n°11 · mars 2027",
+    "v": "19,93",
+    "u": "c$/lb",
+    "c": "+0,99 (+5,23 %)",
+    "d": "up"
+   },
+   {
+    "l": "Blanc n°5 · déc. 2026",
+    "v": "531,50",
+    "u": "$/t",
+    "c": "+24,20 (+4,77 %)",
+    "d": "up"
+   }
+  ]
+ },
+ "lists": {
+  "recap": [
+   {
+    "n": "Blé · Rouen rendu",
+    "s": "Nominal · janv.–mars",
+    "p": "238,00 €/t",
+    "c": "+3,00",
+    "d": "up",
+    "st": "ok",
+    "t3": "+14,46 %",
+    "t6": "n.c.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/physique",
+      "238,00"
+     ],
+     [
+      "La Dépêche, 76/220/11 oct.–déc. (01/10)",
+      "https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement",
+      "237,50"
+     ]
+    ],
+    "note": "Tendance 3 mois sur la série La Dépêche Rouen 76/220/11 oct.–déc. : 207,50 € le 02/07 → 237,50 € le 01/10. 6 mois non comparable (récolte 2025 en avril)."
+   },
+   {
+    "n": "Blé · La Pallice rendu",
+    "s": "oct.–déc.",
+    "p": "228,25 €/t",
+    "c": "+1,50",
+    "d": "up",
+    "st": "gap",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/physique",
+      "228,25"
+     ],
+     [
+      "La Dépêche, 76/220/11 (01/10)",
+      "https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement",
+      "240,50"
+     ]
+    ],
+    "note": "Écart de 12,25 € entre sources : qualités ou bases différentes probables. À vérifier avec votre organisme stockeur."
+   },
+   {
+    "n": "Maïs · Bordeaux rendu",
+    "s": "nov.–mars",
+    "p": "262,75 €/t",
+    "c": "+3,00",
+    "d": "up",
+    "st": "gap",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net, nov.–mars (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/physique",
+      "262,75"
+     ],
+     [
+      "La Dépêche, oct.–déc. (01/10)",
+      "https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement",
+      "271,00"
+     ]
+    ],
+    "note": "Périodes de livraison différentes (nov.–mars contre oct.–déc.)."
+   },
+   {
+    "n": "Maïs · Rhin FOB",
+    "s": "nov.–mars",
+    "p": "247,50 €/t",
+    "c": "+2,75",
+    "d": "up",
+    "st": "one",
+    "t3": "n.c.",
+    "t6": "n.c.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/physique",
+      "247,50"
+     ]
+    ]
+   },
+   {
+    "n": "Maïs · Creil FOB",
+    "s": "nov.–mars",
+    "p": "256,00 €/t",
+    "c": "+1,25",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/physique",
+      "256,00"
+     ]
+    ]
+   },
+   {
+    "n": "GNR agricole",
+    "s": "mi-septembre · prix pro",
+    "p": "137,86 €/hl",
+    "c": "",
+    "d": "flat",
+    "st": "one",
+    "t3": "hausse",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Chambre d'agriculture de Normandie",
+      "https://normandie.chambres-agriculture.fr/sinformer/rechercher-innover/economie-et-politiques-publiques/conjoncture-des-marches/detail-du-dossier-conjoncture/conjoncture-prix-gnr",
+      "137,86 €/hl"
+     ],
+     [
+      "FioulReduc, GNR ordinaire, 1 000 L (03/10)",
+      "https://www.fioulreduc.com/prix-gnr",
+      "190,80 €/hl"
+     ]
+    ],
+    "note": "Les deux sources ne mesurent pas le même produit (agricole contre ordinaire) : pas de confirmation possible."
+   },
+   {
+    "n": "Solution azotée N30",
+    "s": "Rouen départ",
+    "p": "452,75 €/t",
+    "c": "+1,50",
+    "d": "up",
+    "st": "gap",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/solution-azotee/engrais",
+      "452,75"
+     ],
+     [
+      "Pleinchamp / Argus, FOT Rouen (30/09)",
+      "https://www.pleinchamp.com/les-cours/intrants/20-solution-azotee",
+      "447,50"
+     ]
+    ],
+    "note": "Écart de 5,25 € entre les deux sources, relevées à deux dates différentes (30/09 et 02/10). Soit 1,509 € par kg d'azote (452,75 ÷ 300 kg N/t)."
+   },
+   {
+    "n": "Sucre blanc · Pologne FCA",
+    "s": "Kalisz · granulé standard",
+    "p": "0,58 €/kg",
+    "c": "",
+    "d": "flat",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "CMB News (02/10)",
+      "https://commodity-board.com/sugar-beet-margins-ice-no-5-steady-eu-refined-prices-stay-firm",
+      "0,58 €/kg"
+     ]
+    ],
+    "note": "Pas de cotation physique publique en France. Repère marché : blanc n°5 décembre 2026 à 531,50 $/t (règlement ICE du 02/10)."
+   }
+  ],
+  "ble_terme": [
+   {
+    "n": "Déc. 2026",
+    "p": "241,50",
+    "c": "+2,50",
+    "d": "up",
+    "st": "ok",
+    "t3": "+15,00 %",
+    "t6": "+10,40 %",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/terme",
+      "241,50"
+     ],
+     [
+      "La Dépêche : 239,00 le 01/10 + 2,50",
+      "https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement",
+      "241,50"
+     ]
+    ],
+    "note": "Références : 210,00 € le 02/07 et 218,75 € le 02/04 (La Dépêche)."
+   },
+   {
+    "n": "Mars 2027",
+    "p": "243,50",
+    "c": "+2,50",
+    "d": "up",
+    "st": "ok",
+    "t3": "+13,12 %",
+    "t6": "n.d.",
+    "note": "Référence 3 mois : 215,25 € le 02/07 (La Dépêche).",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/terme",
+      "243,50"
+     ],
+     [
+      "La Dépêche : 241,00 le 01/10 + 2,50",
+      "https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement",
+      "243,50"
+     ]
+    ]
+   },
+   {
+    "n": "Mai 2027",
+    "p": "243,75",
+    "c": "+2,25",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/terme",
+      "243,75"
+     ]
+    ]
+   },
+   {
+    "n": "Sept. 2027",
+    "key": 1,
+    "p": "233,75",
+    "c": "+1,00",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/terme",
+      "233,75"
+     ]
+    ]
+   },
+   {
+    "n": "Déc. 2027",
+    "p": "237,50",
+    "c": "+1,25",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/terme",
+      "237,50"
+     ]
+    ]
+   }
+  ],
+  "ble_phys": [
+   {
+    "n": "Rouen rendu",
+    "s": "janv.–mars",
+    "p": "238,00 €",
+    "c": "+3,00",
+    "d": "up",
+    "st": "ok",
+    "t3": "+14,46 %",
+    "t6": "n.c.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/physique",
+      "238,00"
+     ],
+     [
+      "La Dépêche 76/220/11 oct.–déc. (01/10)",
+      "https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement",
+      "237,50"
+     ]
+    ]
+   },
+   {
+    "n": "La Pallice rendu",
+    "s": "oct.–déc.",
+    "p": "228,25 €",
+    "c": "+1,50",
+    "d": "up",
+    "st": "gap",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/physique",
+      "228,25"
+     ],
+     [
+      "La Dépêche (01/10)",
+      "https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement",
+      "240,50"
+     ]
+    ]
+   },
+   {
+    "n": "Dunkerque rendu",
+    "s": "oct.–déc.",
+    "p": "213,25 €",
+    "c": "+0,50",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/physique",
+      "213,25"
+     ]
+    ]
+   },
+   {
+    "n": "Moselle FOB",
+    "s": "oct.",
+    "p": "233,50 €",
+    "c": "+2,25",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/physique",
+      "233,50"
+     ]
+    ]
+   },
+   {
+    "n": "Creil FOB",
+    "s": "oct.–déc.",
+    "p": "222,00 €",
+    "c": "+5,00",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/physique",
+      "222,00"
+     ]
+    ]
+   },
+   {
+    "n": "Mer Noire FOB",
+    "s": "nov.–janv.",
+    "p": "193,75 $",
+    "c": "0,00",
+    "d": "flat",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/ble-tendre/physique",
+      "193,75 $"
+     ]
+    ]
+   }
+  ],
+  "mais_terme": [
+   {
+    "n": "Nov. 2026",
+    "p": "269,00",
+    "c": "+2,50",
+    "d": "up",
+    "st": "ok",
+    "t3": "+17,60 %",
+    "t6": "+29,48 %",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/terme",
+      "269,00"
+     ],
+     [
+      "La Dépêche : 266,50 le 01/10 + 2,50",
+      "https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement",
+      "269,00"
+     ]
+    ],
+    "note": "Références : 228,75 € le 02/07 et 207,75 € le 02/04 (La Dépêche)."
+   },
+   {
+    "n": "Mars 2027",
+    "p": "263,75",
+    "c": "+0,75",
+    "d": "up",
+    "st": "ok",
+    "t3": "+16,19 %",
+    "t6": "n.d.",
+    "note": "Référence 3 mois : 227,00 € le 02/07 (La Dépêche).",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/terme",
+      "263,75"
+     ],
+     [
+      "La Dépêche : 263,00 le 01/10 + 0,75",
+      "https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement",
+      "263,75"
+     ]
+    ]
+   },
+   {
+    "n": "Juin 2027",
+    "p": "263,25",
+    "c": "+1,00",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/terme",
+      "263,25"
+     ]
+    ]
+   },
+   {
+    "n": "Août 2027",
+    "p": "262,75",
+    "c": "+1,50",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/terme",
+      "262,75"
+     ]
+    ]
+   },
+   {
+    "n": "Nov. 2027",
+    "key": 1,
+    "p": "230,75",
+    "c": "+0,50",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/terme",
+      "230,75"
+     ]
+    ]
+   }
+  ],
+  "mais_phys": [
+   {
+    "n": "Bordeaux rendu",
+    "s": "nov.–mars",
+    "p": "262,75 €",
+    "c": "+3,00",
+    "d": "up",
+    "st": "gap",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/physique",
+      "262,75"
+     ],
+     [
+      "La Dépêche oct.–déc. (01/10)",
+      "https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement",
+      "271,00"
+     ]
+    ]
+   },
+   {
+    "n": "La Pallice rendu",
+    "s": "nov.–mars",
+    "p": "272,75 €",
+    "c": "−1,50",
+    "d": "down",
+    "st": "ok",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/physique",
+      "272,75"
+     ],
+     [
+      "La Dépêche oct.–déc. (01/10)",
+      "https://www.reussir.fr/articles/marche-des-cereales-du-1er-octobre-2026-les-prix-des-cereales-rebondissent-tres-legerement",
+      "275,00"
+     ]
+    ]
+   },
+   {
+    "n": "Rhin FOB",
+    "s": "nov.–mars",
+    "p": "247,50 €",
+    "c": "+2,75",
+    "d": "up",
+    "st": "one",
+    "t3": "n.c.",
+    "t6": "n.c.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/physique",
+      "247,50"
+     ]
+    ]
+   },
+   {
+    "n": "Creil FOB",
+    "s": "nov.–mars",
+    "p": "256,00 €",
+    "c": "+1,25",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/physique",
+      "256,00"
+     ]
+    ]
+   },
+   {
+    "n": "Eure-et-Loir/Loiret départ",
+    "s": "oct.–nov.",
+    "p": "274,00 €",
+    "c": "+3,00",
+    "d": "up",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/physique",
+      "274,00"
+     ]
+    ]
+   },
+   {
+    "n": "Golfe du Mexique FOB",
+    "s": "déc.",
+    "p": "238,00 $",
+    "c": "−4,00",
+    "d": "down",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net (02/10)",
+      "https://www.terre-net.fr/marche-agricole/mais/physique",
+      "238,00 $"
+     ]
+    ]
+   }
+  ],
+  "brent": [
+   {
+    "n": "Brent, échéance déc. 2026",
+    "s": "règlement 02/10",
+    "p": "99,74 $",
+    "c": "−2,57 (−2,51 %)",
+    "d": "down",
+    "st": "gap",
+    "t3": "+37,23 %",
+    "t6": "−8,52 %",
+    "src": [
+     [
+      "Yahoo Finance, règlement (02/10)",
+      "https://finance.yahoo.com/energy/articles/oil-rises-slightly-market-weighs-010952829.html",
+      "99,74"
+     ],
+     [
+      "Reuters via Business Standard, 16 h 49 GMT",
+      "https://business-standard.com/amp/world-news/oil-falls-2-as-europe-agrees-to-release-diesel-reserves-after-trump-push-126100201048_1.html",
+      "100,50"
+     ],
+     [
+      "EnergyNow (02/10)",
+      "https://energynow.com/2026/10/oil-ends-volatile-week-mixed-as-emergency-reserve-release-knocks-wti-lower-but-brent-holds-above-102",
+      "102,25"
+     ]
+    ],
+    "note": "EnergyNow annonce 102,25 $ (−0,06 $), en contradiction avec Yahoo et Reuters (baisse d'environ 2 $). Valeur Yahoo retenue. Tendances : 72,68 $ (clôture du 01/07, Fortune) et 109,03 $ (règlement du 02/04, Wikipédia)."
+   },
+   {
+    "n": "Sur la semaine",
+    "s": "",
+    "p": "−4,1 %",
+    "c": "",
+    "d": "down",
+    "st": "one",
+    "t3": "",
+    "t6": "",
+    "src": [
+     [
+      "Yahoo Finance",
+      "https://finance.yahoo.com/energy/articles/oil-rises-slightly-market-weighs-010952829.html",
+      "−4,1 %"
+     ]
+    ]
+   }
+  ],
+  "gnr": [
+   {
+    "n": "GNR agricole",
+    "s": "mi-septembre · prix pro",
+    "p": "137,86 €/hl",
+    "c": "",
+    "d": "flat",
+    "st": "one",
+    "t3": "hausse",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Chambre d'agriculture de Normandie",
+      "https://normandie.chambres-agriculture.fr/sinformer/rechercher-innover/economie-et-politiques-publiques/conjoncture-des-marches/detail-du-dossier-conjoncture/conjoncture-prix-gnr",
+      "137,86 €/hl"
+     ]
+    ],
+    "note": "La source ne précise pas HT ou TTC."
+   },
+   {
+    "n": "GNR ordinaire (contrôle)",
+    "s": "moyenne nationale 03/10 · 1 000 L",
+    "p": "190,80 €/hl",
+    "c": "−14 €/1 000 L sur 7 j",
+    "d": "down",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "FioulReduc",
+      "https://www.fioulreduc.com/prix-gnr",
+      "1,908 €/L"
+     ]
+    ],
+    "note": "Fourchette régionale de 1,850 €/L (Bretagne) à 1,979 €/L (Alsace)."
+   }
+  ],
+  "azote": [
+   {
+    "n": "Solution azotée N30",
+    "s": "Rouen départ · 02/10",
+    "p": "452,75 €/t",
+    "c": "+1,50",
+    "d": "up",
+    "st": "gap",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "Terre-net",
+      "https://www.terre-net.fr/marche-agricole/solution-azotee/engrais",
+      "452,75"
+     ],
+     [
+      "Pleinchamp / Argus, FOT Rouen (30/09)",
+      "https://www.pleinchamp.com/les-cours/intrants/20-solution-azotee",
+      "447,50"
+     ],
+     [
+      "La Dépêche, tendance août",
+      "https://www.reussir.fr/ladepeche/marche-des-engrais-le-prix-de-la-solution-azotee-fortement-augmente-en-aout-2026",
+      "+35 €/t en août"
+     ]
+    ],
+    "note": "Pas de cotation publique de la N39. Historique détaillé réservé aux abonnés Terre-net. Coût de l'unité : 1,509 €/kg N."
+   }
+  ],
+  "sucre11": [
+   {
+    "n": "Mars 2027",
+    "s": "échéance de tête",
+    "p": "19,93",
+    "c": "+0,99 (+5,23 %)",
+    "d": "up",
+    "st": "ok",
+    "t3": "+26,38 %",
+    "t6": "+22,34 %",
+    "src": [
+     [
+      "Czarnikow, règlements ICE (02/10)",
+      "https://www.czapp.com/analyst-insights/daily-market-price-updates-and-commentary-2nd-october-2026/",
+      "19,93"
+     ],
+     [
+      "CMB News, règlement 01/10 + variation",
+      "https://commodity-board.com/sugar-no-11-firms-above-18-cents-as-india-tightens-policy-and-brazil-leads-supply",
+      "18,94 + 0,99"
+     ],
+     [
+      "Barchart, variation du 02/10",
+      "https://www.inkl.com/news/sugar-prices-soar-as-weather-concerns-spur-fund-buying",
+      "+0,99 (+5,23 %)"
+     ]
+    ],
+    "note": "Références : 15,77 le 02/07 et 16,29 le 02/04 (Czarnikow). Plus haut de vie du contrat : 19,96."
+   },
+   {
+    "n": "Mai 2027",
+    "p": "19,17",
+    "c": "+0,79",
+    "d": "up",
+    "st": "ok",
+    "t3": "+22,88 %",
+    "t6": "+19,51 %",
+    "src": [
+     [
+      "Czarnikow, règlements ICE (02/10)",
+      "https://www.czapp.com/analyst-insights/daily-market-price-updates-and-commentary-2nd-october-2026/",
+      "19,17"
+     ],
+     [
+      "CMB News, règlement 01/10 + variation",
+      "https://commodity-board.com/sugar-no-11-firms-above-18-cents-as-india-tightens-policy-and-brazil-leads-supply",
+      "18,38 + 0,79"
+     ]
+    ],
+    "note": "Références : 15,60 le 02/07 et 16,04 le 02/04."
+   },
+   {
+    "n": "Juil. 2027",
+    "p": "18,68",
+    "c": "+0,61",
+    "d": "up",
+    "st": "ok",
+    "t3": "+19,51 %",
+    "t6": "+16,90 %",
+    "src": [
+     [
+      "Czarnikow, règlements ICE (02/10)",
+      "https://www.czapp.com/analyst-insights/daily-market-price-updates-and-commentary-2nd-october-2026/",
+      "18,68"
+     ],
+     [
+      "CMB News, règlement 01/10 + variation",
+      "https://commodity-board.com/sugar-no-11-firms-above-18-cents-as-india-tightens-policy-and-brazil-leads-supply",
+      "18,07 + 0,61"
+     ]
+    ],
+    "note": "Références : 15,63 le 02/07 et 15,98 le 02/04."
+   },
+   {
+    "n": "Oct. 2027",
+    "p": "18,57",
+    "c": "+0,48",
+    "d": "up",
+    "st": "ok",
+    "t3": "+16,35 %",
+    "t6": "+14,70 %",
+    "src": [
+     [
+      "Czarnikow, règlements ICE (02/10)",
+      "https://www.czapp.com/analyst-insights/daily-market-price-updates-and-commentary-2nd-october-2026/",
+      "18,57"
+     ],
+     [
+      "CMB News, règlement 01/10 + variation",
+      "https://commodity-board.com/sugar-no-11-firms-above-18-cents-as-india-tightens-policy-and-brazil-leads-supply",
+      "18,09 + 0,48"
+     ]
+    ],
+    "note": "Références : 15,96 le 02/07 et 16,19 le 02/04."
+   },
+   {
+    "n": "Mars 2028",
+    "p": "18,82",
+    "c": "+0,37",
+    "d": "up",
+    "st": "ok",
+    "t3": "+12,97 %",
+    "t6": "+12,43 %",
+    "src": [
+     [
+      "Czarnikow, règlements ICE (02/10)",
+      "https://www.czapp.com/analyst-insights/daily-market-price-updates-and-commentary-2nd-october-2026/",
+      "18,82"
+     ],
+     [
+      "CMB News, règlement 01/10 + variation",
+      "https://commodity-board.com/sugar-no-11-firms-above-18-cents-as-india-tightens-policy-and-brazil-leads-supply",
+      "18,45 + 0,37"
+     ]
+    ],
+    "note": "Références : 16,66 le 02/07 et 16,74 le 02/04."
+   }
+  ],
+  "sucre5": [
+   {
+    "n": "Déc. 2026",
+    "s": "échéance de tête",
+    "p": "531,50",
+    "c": "+24,20 (+4,77 %)",
+    "d": "up",
+    "st": "ok",
+    "t3": "+12,39 %",
+    "t6": "+19,14 %",
+    "src": [
+     [
+      "Czarnikow, règlements ICE (02/10)",
+      "https://www.czapp.com/analyst-insights/daily-market-price-updates-and-commentary-2nd-october-2026/",
+      "531,50"
+     ],
+     [
+      "CMB News, règlement 01/10 + variation",
+      "https://commodity-board.com/sugar-beet-margins-ice-no-5-steady-eu-refined-prices-stay-firm",
+      "507,30 + 24,20"
+     ],
+     [
+      "Barchart, variation du 02/10",
+      "https://www.inkl.com/news/sugar-prices-soar-as-weather-concerns-spur-fund-buying",
+      "+24,20 (+4,77 %)"
+     ]
+    ],
+    "note": "Références : 472,90 le 02/07 et 446,10 le 02/04 (Czarnikow)."
+   },
+   {
+    "n": "Mars 2027",
+    "p": "545,40",
+    "c": "+24,30",
+    "d": "up",
+    "st": "ok",
+    "t3": "+15,33 %",
+    "t6": "+20,69 %",
+    "src": [
+     [
+      "Czarnikow, règlements ICE (02/10)",
+      "https://www.czapp.com/analyst-insights/daily-market-price-updates-and-commentary-2nd-october-2026/",
+      "545,40"
+     ],
+     [
+      "CMB News, règlement 01/10 + variation",
+      "https://commodity-board.com/sugar-beet-margins-ice-no-5-steady-eu-refined-prices-stay-firm",
+      "521,10 + 24,30"
+     ]
+    ],
+    "note": "Références : 472,90 le 02/07 et 451,90 le 02/04."
+   },
+   {
+    "n": "Mai 2027",
+    "p": "550,60",
+    "c": "+23,00",
+    "d": "up",
+    "st": "ok",
+    "t3": "+16,60 %",
+    "t6": "+21,79 %",
+    "src": [
+     [
+      "Czarnikow, règlements ICE (02/10)",
+      "https://www.czapp.com/analyst-insights/daily-market-price-updates-and-commentary-2nd-october-2026/",
+      "550,60"
+     ],
+     [
+      "CMB News, règlement 01/10 + variation",
+      "https://commodity-board.com/sugar-beet-margins-ice-no-5-steady-eu-refined-prices-stay-firm",
+      "527,60 + 23,00"
+     ]
+    ],
+    "note": "Références : 472,20 le 02/07 et 452,10 le 02/04."
+   },
+   {
+    "n": "Août 2027",
+    "p": "544,00",
+    "c": "+19,90",
+    "d": "up",
+    "st": "ok",
+    "t3": "+16,41 %",
+    "t6": "+20,59 %",
+    "src": [
+     [
+      "Czarnikow, règlements ICE (02/10)",
+      "https://www.czapp.com/analyst-insights/daily-market-price-updates-and-commentary-2nd-october-2026/",
+      "544,00"
+     ],
+     [
+      "CMB News, règlement 01/10 + variation",
+      "https://commodity-board.com/sugar-beet-margins-ice-no-5-steady-eu-refined-prices-stay-firm",
+      "524,10 + 19,90"
+     ]
+    ],
+    "note": "Références : 467,30 le 02/07 et 451,10 le 02/04."
+   },
+   {
+    "n": "Oct. 2027",
+    "key": 1,
+    "p": "534,70",
+    "c": "+15,30",
+    "d": "up",
+    "st": "ok",
+    "t3": "+15,31 %",
+    "t6": "+18,17 %",
+    "src": [
+     [
+      "Czarnikow, règlements ICE (02/10)",
+      "https://www.czapp.com/analyst-insights/daily-market-price-updates-and-commentary-2nd-october-2026/",
+      "534,70"
+     ],
+     [
+      "CMB News, règlement 01/10 + variation",
+      "https://commodity-board.com/sugar-beet-margins-ice-no-5-steady-eu-refined-prices-stay-firm",
+      "519,40 + 15,30"
+     ]
+    ],
+    "note": "Références : 463,70 le 02/07 et 452,50 le 02/04."
+   }
+  ],
+  "sucre_phys": [
+   {
+    "n": "Pologne · Kalisz FCA",
+    "s": "granulé standard",
+    "p": "0,58 €/kg",
+    "c": "",
+    "d": "flat",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "CMB News (02/10)",
+      "https://commodity-board.com/sugar-beet-margins-ice-no-5-steady-eu-refined-prices-stay-firm",
+      "0,58 €/kg"
+     ]
+    ]
+   },
+   {
+    "n": "Lituanie · Marijampole FCA",
+    "s": "ICUMSA 45, cat. II",
+    "p": "0,52 €/kg",
+    "c": "",
+    "d": "flat",
+    "st": "one",
+    "t3": "n.d.",
+    "t6": "n.d.",
+    "src": [
+     [
+      "CMB News (02/10)",
+      "https://commodity-board.com/sugar-beet-margins-ice-no-5-steady-eu-refined-prices-stay-firm",
+      "0,52 €/kg"
+     ]
+    ]
+   }
+  ],
+  "indices": [
+   {
+    "n": "CAC 40",
+    "s": "semaine −2,24 %",
+    "p": "7 897,19",
+    "c": "+0,79 %",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "BFM Bourse",
+      "https://www.tradingsat.com/cac-40-FR0003500008/actualites/cac-40-soutenu-par-la-baisse-des-prix-du-petrole-le-cac-40-termine-dans-le-vert-mais-cede-22-sur-la-semaine-1171214.html",
+      "7 897,19"
+     ]
+    ]
+   },
+   {
+    "n": "Euro Stoxx 50",
+    "s": "semaine −1,10 %",
+    "p": "6 233,29",
+    "c": "+0,94 %",
+    "d": "up",
+    "st": "gap",
+    "src": [
+     [
+      "MarketScreener",
+      "https://www.marketscreener.com/quote/index/EURO-STOXX-50-7396/",
+      "6 233,29"
+     ],
+     [
+      "Trading Economics",
+      "https://tradingeconomics.com/euro-area/stock-market",
+      "6 241,75"
+     ]
+    ]
+   },
+   {
+    "n": "Dow Jones",
+    "s": "",
+    "p": "51 176,96",
+    "c": "+0,49 %",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "Yahoo Finance",
+      "https://finance.yahoo.com/markets/live/stock-market-today-friday-october-2-dow-sp-500-nasdaq-september-jobs-report-080623878.html",
+      "51 176,96"
+     ]
+    ]
+   },
+   {
+    "n": "Nasdaq Composite",
+    "s": "",
+    "p": "27 190,86",
+    "c": "+1,19 %",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "Yahoo Finance",
+      "https://finance.yahoo.com/markets/live/stock-market-today-friday-october-2-dow-sp-500-nasdaq-september-jobs-report-080623878.html",
+      "27 190,86"
+     ]
+    ]
+   },
+   {
+    "n": "Nikkei 225",
+    "s": "plus haut de clôture sur 6 semaines",
+    "p": "68 956,72",
+    "c": "+3,3 %",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "Business Recorder (Reuters)",
+      "https://www.brecorder.com/news/40442227/nikkei-logs-six-week-closing-high",
+      "68 956,72"
+     ]
+    ]
+   }
+  ],
+  "taux": [
+   {
+    "n": "États-Unis",
+    "p": "5,283",
+    "c": "+4,1 pb",
+    "d": "up",
+    "st": "ok",
+    "src": [
+     [
+      "Trading Economics",
+      "https://tradingeconomics.com/bonds",
+      "5,283"
+     ],
+     [
+      "Yahoo Finance",
+      "https://finance.yahoo.com/markets/live/stock-market-today-friday-october-2-dow-sp-500-nasdaq-september-jobs-report-080623878.html",
+      "5,28"
+     ]
+    ]
+   },
+   {
+    "n": "Royaume-Uni",
+    "p": "5,377",
+    "c": "+1,4 pb",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "Trading Economics",
+      "https://tradingeconomics.com/bonds",
+      "5,377"
+     ]
+    ]
+   },
+   {
+    "n": "Allemagne",
+    "p": "3,465",
+    "c": "+5,6 pb",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "Trading Economics",
+      "https://tradingeconomics.com/bonds",
+      "3,4645"
+     ]
+    ]
+   },
+   {
+    "n": "France",
+    "p": "4,866",
+    "c": "+3,6 pb",
+    "d": "up",
+    "st": "ok",
+    "src": [
+     [
+      "Trading Economics",
+      "https://tradingeconomics.com/bonds",
+      "4,866"
+     ],
+     [
+      "BFM Bourse",
+      "https://www.tradingsat.com/cac-40-FR0003500008/actualites/cac-40-soutenu-par-la-baisse-des-prix-du-petrole-le-cac-40-termine-dans-le-vert-mais-cede-22-sur-la-semaine-1171214.html",
+      "4,87"
+     ]
+    ]
+   },
+   {
+    "n": "Italie",
+    "p": "4,609",
+    "c": "+9,9 pb",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "Trading Economics",
+      "https://tradingeconomics.com/bonds",
+      "4,6091"
+     ]
+    ]
+   },
+   {
+    "n": "Japon",
+    "p": "3,111",
+    "c": "+0,9 pb",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "Trading Economics",
+      "https://tradingeconomics.com/bonds",
+      "3,111"
+     ]
+    ]
+   },
+   {
+    "n": "Canada",
+    "p": "3,945",
+    "c": "+1,4 pb",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "Trading Economics",
+      "https://tradingeconomics.com/bonds",
+      "3,945"
+     ]
+    ]
+   },
+   {
+    "n": "Zone euro",
+    "s": "au 01/10",
+    "p": "4,12",
+    "c": "+6 pb",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "Trading Economics",
+      "https://tradingeconomics.com/bonds",
+      "4,12"
+     ]
+    ],
+    "note": "Valeur du 01/10, la plus récente publiée."
+   }
+  ],
+  "mm": [
+   {
+    "n": "Euribor 1 mois",
+    "s": "fixing 02/10",
+    "p": "2,437",
+    "c": "+0,3 pb",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "euribor-rates.eu (données EMMI)",
+      "https://www.euribor-rates.eu/fr/taux-euribor-actuels/",
+      "2,437"
+     ]
+    ],
+    "note": "Veille : 2,434 %."
+   },
+   {
+    "n": "Euribor 3 mois",
+    "s": "fixing 02/10",
+    "p": "2,598",
+    "c": "+0,9 pb",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "euribor-rates.eu (données EMMI)",
+      "https://www.euribor-rates.eu/fr/taux-euribor-actuels/",
+      "2,598"
+     ]
+    ],
+    "note": "Veille : 2,589 %."
+   },
+   {
+    "n": "Euribor 12 mois",
+    "s": "fixing 02/10",
+    "p": "3,323",
+    "c": "+2,0 pb",
+    "d": "up",
+    "st": "one",
+    "src": [
+     [
+      "euribor-rates.eu (données EMMI)",
+      "https://www.euribor-rates.eu/fr/taux-euribor-actuels/",
+      "3,323"
+     ]
+    ],
+    "note": "Veille : 3,303 %."
+   },
+   {
+    "n": "Mid-swap EUR 10 ans",
+    "s": "fixe annuel contre Euribor 6 mois · 16 h 58 Londres",
+    "p": "3,59",
+    "c": "−5 pb",
+    "d": "down",
+    "st": "ok",
+    "src": [
+     [
+      "BlueGamma",
+      "https://www.bluegamma.io/euribor-swap-rates/10-year-euribor-swap-rate",
+      "3,59"
+     ],
+     [
+      "Oblig.fr",
+      "https://www.oblig.fr/def/swap-de-taux/",
+      "3,59"
+     ]
+    ],
+    "note": "Veille : 3,64 % (BlueGamma). Investing.com donne 3,606 % au 01/10."
+   }
+  ]
+ }
+}
