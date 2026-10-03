@@ -1241,15 +1241,25 @@
     "p": "1,1225",
     "c": "−0,65 %",
     "d": "down",
-    "st": "one",
+    "st": "ok",
     "src": [
      [
-      "BCE, taux de référence 02/10",
+      "BCE, taux de référence 02/10 (14 h 15)",
       "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-usd.en.html",
       "1,1225"
+     ],
+     [
+      "Banque du Canada 02/10, croisement via le dollar canadien",
+      "https://www.bankofcanada.ca/rates/exchange/daily-exchange-rates/",
+      "1,12572"
+     ],
+     [
+      "Trading Economics, fin de séance 02/10 (croisement via le dollar)",
+      "https://tradingeconomics.com/currencies?base=eur",
+      "1,12518"
      ]
     ],
-    "note": "Veille : 1,1298. Un euro plus faible soutient les prix en euros du blé, du maïs et du colza, qui suivent le marché mondial en dollars."
+    "note": "Veille BCE : 1,1298. Écart de +0,29 % avec la Banque du Canada : le taux BCE est fixé à 14 h 15 (Francfort), avant la publication de l'emploi américain (14 h 30), après laquelle l'euro a remonté. Un euro plus faible soutient les prix en euros du blé, du maïs et du colza."
    },
    {
     "n": "EUR/GBP",
@@ -1257,15 +1267,25 @@
     "p": "0,85033",
     "c": "−0,40 %",
     "d": "down",
-    "st": "one",
+    "st": "ok",
     "src": [
      [
-      "BCE, taux de référence 02/10",
+      "BCE, taux de référence 02/10 (14 h 15)",
       "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-gbp.en.html",
       "0,85033"
+     ],
+     [
+      "Banque du Canada 02/10, croisement via le dollar canadien",
+      "https://www.bankofcanada.ca/rates/exchange/daily-exchange-rates/",
+      "0,85063"
+     ],
+     [
+      "Trading Economics, fin de séance 02/10 (croisement via le dollar)",
+      "https://tradingeconomics.com/currencies?base=eur",
+      "0,85010"
      ]
     ],
-    "note": "Veille : 0,85373."
+    "note": "Veille BCE : 0,85373. Les trois sources concordent à 0,05 % près."
    },
    {
     "n": "EUR/JPY",
@@ -1273,15 +1293,25 @@
     "p": "176,99",
     "c": "−0,84 %",
     "d": "down",
-    "st": "one",
+    "st": "ok",
     "src": [
      [
-      "BCE, taux de référence 02/10",
+      "BCE, taux de référence 02/10 (14 h 15)",
       "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-jpy.en.html",
       "176,99"
+     ],
+     [
+      "Banque du Canada 02/10, croisement via le dollar canadien",
+      "https://www.bankofcanada.ca/rates/exchange/daily-exchange-rates/",
+      "177,60"
+     ],
+     [
+      "Trading Economics, fin de séance 02/10 (croisement via le dollar)",
+      "https://tradingeconomics.com/currencies?base=eur",
+      "177,58"
      ]
     ],
-    "note": "Veille : 178,49."
+    "note": "Veille BCE : 178,49. Écart de +0,34 % avec les deux contrôles, même décalage horaire que pour le dollar."
    },
    {
     "n": "EUR/CAD",
@@ -1289,15 +1319,25 @@
     "p": "1,5984",
     "c": "−0,69 %",
     "d": "down",
-    "st": "one",
+    "st": "ok",
     "src": [
      [
-      "BCE, taux de référence 02/10",
+      "BCE, taux de référence 02/10 (14 h 15)",
       "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-cad.en.html",
       "1,5984"
+     ],
+     [
+      "Banque du Canada 02/10, croisement via le dollar canadien",
+      "https://www.bankofcanada.ca/rates/exchange/daily-exchange-rates/",
+      "1,6037"
+     ],
+     [
+      "Trading Economics, fin de séance 02/10 (croisement via le dollar)",
+      "https://tradingeconomics.com/currencies?base=eur",
+      "1,6033"
      ]
     ],
-    "note": "Veille : 1,6095."
+    "note": "Veille BCE : 1,6095. Écart de +0,33 % avec la Banque du Canada (taux publié à 16 h 30, heure de l'Est), même décalage horaire."
    },
    {
     "n": "EUR/RUB",
