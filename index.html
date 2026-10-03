@@ -180,6 +180,12 @@ img{max-width:100%}
 .mm-r{font-family:var(--f-data);font-size:11px;color:var(--sky);white-space:nowrap}
 .mm-s{font-size:11px;color:var(--muted);white-space:nowrap}
 .slot.mm .rainbar{width:100%}
+.carry-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.carry-tbl th{font-weight:600;color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;text-align:right;padding:6px 6px;border-bottom:1px solid var(--line)}
+.carry-tbl th:first-child,.carry-tbl td:first-child{text-align:left}
+.carry-tbl .cm{color:var(--muted);font-size:10.5px}
+.carry-tbl td{font-family:var(--f-data);font-variant-numeric:tabular-nums;text-align:right;padding:6px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl-wrap{overflow-x:auto}
 </style>
 </head>
 <body>
@@ -214,6 +220,8 @@ img{max-width:100%}
       <div class="hero" data-hero="ble"></div>
       <div class="sub">À terme</div>
       <div class="rows" data-list="ble_terme"></div>
+      <div class="sub">Portage entre échéances · financement Euribor 3 mois + 150 pb</div>
+      <div class="tbl-wrap" data-carry="ble_terme"></div>
       <div class="sub">Physique · récolte 2026</div>
       <div class="rows" data-list="ble_phys"></div>
       <div class="trend"><strong>Tendance :</strong> hausse nette sur 3 mois (+15,00 % sur décembre 2026) après un point bas début juillet. Rebond vendredi après la chute du 30 septembre ; les espoirs de négociation Russie-Ukraine freinent la hausse.</div>
@@ -223,6 +231,8 @@ img{max-width:100%}
       <div class="hero" data-hero="mais"></div>
       <div class="sub">À terme</div>
       <div class="rows" data-list="mais_terme"></div>
+      <div class="sub">Portage entre échéances · financement Euribor 3 mois + 150 pb</div>
+      <div class="tbl-wrap" data-carry="mais_terme"></div>
       <div class="sub">Physique · récolte 2026</div>
       <div class="rows" data-list="mais_phys"></div>
       <div class="hint">Tendances 3 et 6 mois calculées sur la même échéance (règlements des 02/07 et 02/04, La Dépêche). Échéances 2027 sans archive publique gratuite : « n.d. » jusqu'à ce que l'historique quotidien de la page atteigne 3 puis 6 mois.</div>
@@ -284,6 +294,11 @@ img{max-width:100%}
       <div class="rows" data-list="taux"></div>
       <div class="trend"><strong>Écart OAT-Bund :</strong> 140 pb (4,866 − 3,4645 %).</div>
       <div class="hint">Le G8 n'existe plus depuis 2014 : la Russie est exclue, le tableau suit le G7.</div>
+    </article>
+    <article class="card">
+      <h2>Change <small>G8 contre euro · taux BCE</small></h2>
+      <div class="rows" data-list="fx"></div>
+      <div class="hint">Taux de référence de la BCE, publiés vers 14 h 15 (heure de Francfort) chaque jour ouvré : unités de devise pour 1 euro. Variation par rapport au taux de la veille.</div>
     </article>
     <article class="card">
       <h2>Monétaire et swap <small>EUR · %</small></h2>
@@ -470,6 +485,13 @@ lists:{
   {n:"Canada",p:"3,945",c:"+1,4 pb",d:"up",st:"one",src:[["Trading Economics","https://tradingeconomics.com/bonds","3,945"]]},
   {n:"Zone euro",s:"au 01/10",p:"4,12",c:"+6 pb",d:"up",st:"one",src:[["Trading Economics","https://tradingeconomics.com/bonds","4,12"]],note:"Valeur du 01/10, la plus récente publiée."}
  ],
+ fx:[
+  {n:"EUR/USD",s:"dollar américain · États-Unis",p:"1,1225",c:"−0,65 %",d:"down",st:"one",src:[["BCE, taux de référence 02/10",'https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-usd.en.html',"1,1225"]],note:"Veille : 1,1298. Un euro plus faible soutient les prix en euros du blé, du maïs et du colza, qui suivent le marché mondial en dollars."},
+  {n:"EUR/GBP",s:"livre sterling · Royaume-Uni",p:"0,85033",c:"−0,40 %",d:"down",st:"one",src:[["BCE, taux de référence 02/10",'https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-gbp.en.html',"0,85033"]],note:"Veille : 0,85373."},
+  {n:"EUR/JPY",s:"yen · Japon",p:"176,99",c:"−0,84 %",d:"down",st:"one",src:[["BCE, taux de référence 02/10",'https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-jpy.en.html',"176,99"]],note:"Veille : 178,49."},
+  {n:"EUR/CAD",s:"dollar canadien · Canada",p:"1,5984",c:"−0,69 %",d:"down",st:"one",src:[["BCE, taux de référence 02/10",'https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-cad.en.html',"1,5984"]],note:"Veille : 1,6095."},
+  {n:"EUR/RUB",s:"rouble · Russie",p:"n.p.",c:"",d:"flat",st:"one",src:[["BCE",'https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html',"non publié"]],note:"La BCE a suspendu la publication du taux de référence du rouble ; dernière publication le 1er mars 2022. Allemagne, France et Italie sont en euro."}
+ ],
  mm:[
   {n:"Euribor 1 mois",s:"fixing 02/10",p:"2,437",c:"+0,3 pb",d:"up",st:"one",src:[["euribor-rates.eu (données EMMI)","https://www.euribor-rates.eu/fr/taux-euribor-actuels/","2,437"]],note:"Veille : 2,434 %."},
   {n:"Euribor 3 mois",s:"fixing 02/10",p:"2,598",c:"+0,9 pb",d:"up",st:"one",src:[["euribor-rates.eu (données EMMI)","https://www.euribor-rates.eu/fr/taux-euribor-actuels/","2,598"]],note:"Veille : 2,589 %."},
@@ -509,6 +531,32 @@ function render(){
     el.innerHTML=DATA.hero[k].map(function(t){return '<div class="tile"><span class="lbl">'+esc(t.l)+'</span><span class="val">'+esc(t.v)+'<u>'+esc(t.u)+'</u></span><span class="chg '+t.d+'">'+ARW[t.d]+esc(t.c)+'</span></div>'}).join('');
   });
 }
+/* ===== PORTAGE (carry) entre échéances ===== */
+var CARRY_SPREAD_BP=150; /* marge bancaire sur l'Euribor 3 mois, en points de base */
+var MOISFR={'janv':0,'févr':1,'fevr':1,'mars':2,'avr':3,'mai':4,'juin':5,'juil':6,'août':7,'aout':7,'sept':8,'oct':9,'nov':10,'déc':11,'dec':11};
+function numFR(s){var m=String(s).replace(/\s/g,'').replace(',','.').match(/-?\d+(\.\d+)?/);return m?parseFloat(m[0]):null}
+function monthIdx(label){var m=String(label).toLowerCase().match(/^([a-zéû]+)\.?\s+(\d{4})/);if(!m)return null;var k=MOISFR[m[1]];return k==null?null:(+m[2])*12+k}
+function fmt2(n){return (n<0?'−':(n>0?'+':''))+Math.abs(n).toFixed(2).replace('.',',')}
+function shortM(n){return esc(String(n).replace(/\.?\s+(\d{2})(\d{2})$/,' $2'))}
+function euribor3m(){var l=(DATA.lists.mm||[]).filter(function(r){return /Euribor 3 mois/.test(r.n)})[0];return l?numFR(l.p):null}
+function renderCarry(){
+  var e3=euribor3m(), rate=e3==null?null:(e3+CARRY_SPREAD_BP/100)/100;
+  [].forEach.call(document.querySelectorAll('[data-carry]'),function(box){
+    var rows=(DATA.lists[box.getAttribute('data-carry')]||[]).map(function(r){return {n:r.n,m:monthIdx(r.n),p:numFR(r.p)}}).filter(function(r){return r.m!=null&&r.p!=null}).sort(function(a,b){return a.m-b.m});
+    if(rate==null||rows.length<2){box.innerHTML='<div class="empty">Portage indisponible : Euribor 3 mois ou courbe manquants.</div>';return}
+    var pairs=[]; for(var i=0;i<rows.length-1;i++) pairs.push([rows[i],rows[i+1]]);
+    if(rows.length>2) pairs.splice(1,0,[rows[0],rows[2]]);
+    var html='<table class="carry-tbl"><thead><tr><th>Report</th><th>Écart</th><th>Financ.</th><th>Reste</th></tr></thead><tbody>';
+    pairs.forEach(function(pr){
+      var a=pr[0],b=pr[1],mo=b.m-a.m,sp=b.p-a.p,fin=a.p*rate*mo/12,net=sp-fin;
+      html+='<tr><td>'+shortM(a.n)+' → '+shortM(b.n)+' <span class="cm">'+mo+' m</span></td><td>'+fmt2(sp)+'</td><td>−'+fin.toFixed(2).replace('.',',')+'</td><td class="'+(net>=0?'up':'down')+'"><b>'+fmt2(net)+'</b></td></tr>';
+    });
+    html+='</tbody></table><div class="hint">€/t. Financement = cours de l\'échéance de départ × (Euribor 3 mois '+e3.toFixed(3).replace('.',',')+' % + '+(CARRY_SPREAD_BP/100).toFixed(2).replace('.',',')+' %) × mois / 12, soit '+(rate*100).toFixed(3).replace('.',',')+' % par an. « Reste » = ce que la courbe paie pour stocker, avant frais de stockage, assurance et freinte : il doit couvrir votre coût de stockage pour que garder le grain soit rentable.</div>';
+    box.innerHTML=html;
+  });
+}
+
+var _renderBase=render; render=function(){_renderBase(); renderCarry();};
 render();
 
 /* ===== ONGLETS ===== */

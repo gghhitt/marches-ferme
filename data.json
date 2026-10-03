@@ -1234,6 +1234,88 @@
     "note": "Valeur du 01/10, la plus récente publiée."
    }
   ],
+  "fx": [
+   {
+    "n": "EUR/USD",
+    "s": "dollar américain · États-Unis",
+    "p": "1,1225",
+    "c": "−0,65 %",
+    "d": "down",
+    "st": "one",
+    "src": [
+     [
+      "BCE, taux de référence 02/10",
+      "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-usd.en.html",
+      "1,1225"
+     ]
+    ],
+    "note": "Veille : 1,1298. Un euro plus faible soutient les prix en euros du blé, du maïs et du colza, qui suivent le marché mondial en dollars."
+   },
+   {
+    "n": "EUR/GBP",
+    "s": "livre sterling · Royaume-Uni",
+    "p": "0,85033",
+    "c": "−0,40 %",
+    "d": "down",
+    "st": "one",
+    "src": [
+     [
+      "BCE, taux de référence 02/10",
+      "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-gbp.en.html",
+      "0,85033"
+     ]
+    ],
+    "note": "Veille : 0,85373."
+   },
+   {
+    "n": "EUR/JPY",
+    "s": "yen · Japon",
+    "p": "176,99",
+    "c": "−0,84 %",
+    "d": "down",
+    "st": "one",
+    "src": [
+     [
+      "BCE, taux de référence 02/10",
+      "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-jpy.en.html",
+      "176,99"
+     ]
+    ],
+    "note": "Veille : 178,49."
+   },
+   {
+    "n": "EUR/CAD",
+    "s": "dollar canadien · Canada",
+    "p": "1,5984",
+    "c": "−0,69 %",
+    "d": "down",
+    "st": "one",
+    "src": [
+     [
+      "BCE, taux de référence 02/10",
+      "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-cad.en.html",
+      "1,5984"
+     ]
+    ],
+    "note": "Veille : 1,6095."
+   },
+   {
+    "n": "EUR/RUB",
+    "s": "rouble · Russie",
+    "p": "n.p.",
+    "c": "",
+    "d": "flat",
+    "st": "one",
+    "src": [
+     [
+      "BCE",
+      "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+      "non publié"
+     ]
+    ],
+    "note": "La BCE a suspendu la publication du taux de référence du rouble ; dernière publication le 1er mars 2022. Allemagne, France et Italie sont en euro."
+   }
+  ],
   "mm": [
    {
     "n": "Euribor 1 mois",
